@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 
+
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["thai", "latin"],
