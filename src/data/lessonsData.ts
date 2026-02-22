@@ -35,7 +35,7 @@ export const lessons: Lesson[] = [
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScEDmKbrgliYNnpYFfDU8Di_KON-rn7U5djef3GlXwp1fDO3A/viewform?usp=dialog",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://www.youtube.com/watch?v=4FDs7Lcvr7A", // Updated video link
+    videoUrl: "https://murf.ai/share/mlut9kne",
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:

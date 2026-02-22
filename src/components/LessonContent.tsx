@@ -98,8 +98,10 @@ export default function LessonContent({
                                 return url;
                             };
                             const embedUrl = getEmbedUrl(lesson.videoUrl);
+                            const isYouTube = lesson.videoUrl.includes("youtube.com") || lesson.videoUrl.includes("youtu.be");
+                            const isMurf = lesson.videoUrl.includes("murf.ai");
 
-                            return lesson.videoUrl.includes("youtube.com") || lesson.videoUrl.includes("youtu.be") ? (
+                            return isYouTube ? (
                                 <iframe
                                     width="100%"
                                     height="100%"
@@ -107,6 +109,17 @@ export default function LessonContent({
                                     title={lesson.title}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="absolute inset-0"
+                                ></iframe>
+                            ) : isMurf ? (
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={lesson.videoUrl}
+                                    title={lesson.title}
+                                    frameBorder="0"
+                                    allow="autoplay"
                                     allowFullScreen
                                     className="absolute inset-0"
                                 ></iframe>
@@ -152,12 +165,12 @@ export default function LessonContent({
                             </p>
                         </div>
                         {lesson.content.overviewImageUrl && (
-                            <div className="w-full md:w-1/2 lg:w-3/5 shrink-0">
-                                <div className="rounded-xl overflow-hidden shadow-lg border-4 border-white">
+                            <div className="shrink-0">
+                                <div className="w-[180px] h-[180px] rounded-lg overflow-hidden border border-slate-200 shadow-sm">
                                     <img
                                         src={lesson.content.overviewImageUrl}
                                         alt="Overview diagram"
-                                        className="w-full h-auto cursor-pointer hover:scale-[1.02] transition-transform"
+                                        className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
                                         onClick={() => window.open(lesson.content.overviewImageUrl, '_blank')}
                                     />
                                 </div>
@@ -185,17 +198,14 @@ export default function LessonContent({
                                         {topic.title}
                                     </h3>
                                     {topic.imageUrl && (
-                                        <div className="my-6 rounded-2xl overflow-hidden shadow-xl border-4 border-white/80 max-w-2xl group/img relative">
-                                            <img
-                                                src={topic.imageUrl}
-                                                alt={topic.title}
-                                                className="w-full h-auto object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-500"
-                                                onClick={() => window.open(topic.imageUrl, '_blank')}
-                                            />
-                                            <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/5 transition-colors pointer-events-none flex items-center justify-center">
-                                                <span className="opacity-0 group-hover/img:opacity-100 bg-white/90 text-slate-800 px-4 py-2 rounded-full text-xs font-bold shadow-lg transition-opacity duration-300">
-                                                    🔍 คลิกเพื่อขยายภาพ
-                                                </span>
+                                        <div className="my-3">
+                                            <div className="w-[180px] h-[180px] rounded-lg overflow-hidden border border-slate-200 shadow-sm">
+                                                <img
+                                                    src={topic.imageUrl}
+                                                    alt={topic.title}
+                                                    className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                                                    onClick={() => window.open(topic.imageUrl, '_blank')}
+                                                />
                                             </div>
                                         </div>
                                     )}
