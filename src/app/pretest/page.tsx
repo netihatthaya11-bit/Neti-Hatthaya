@@ -47,7 +47,7 @@ export default function PretestPage() {
                         </li>
                         <li className="flex items-start gap-3">
                             <span className="text-primary mt-0.5">•</span>
-                            <span>ใช้เวลาประมาณ 10-15 นาที</span>
+                            <span>ใช้เวลาประมาณ 20-30 นาที</span>
                         </li>
                     </ul>
                 </div>
