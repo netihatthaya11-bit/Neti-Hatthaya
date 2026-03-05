@@ -1,17 +1,35 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import FormButton from "@/components/FormButton";
 import { courseInfo } from "@/data/lessonsData";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLinkSettings } from "@/contexts/LinkSettingsContext";
 
 export default function PosttestPage() {
-    const { logVisit } = useAuth();
+    const { logVisit, completedLessons } = useAuth();
+    const { getUrl } = useLinkSettings();
+    const router = useRouter();
+
+    const allCompleted = [1, 2, 3, 4].every((id) => completedLessons.includes(id));
 
     useEffect(() => {
-        logVisit("/posttest");
-    }, [logVisit]);
+        if (!allCompleted) {
+            router.replace("/");
+        }
+    }, [allCompleted, router]);
+
+    useEffect(() => {
+        if (allCompleted) {
+            logVisit("/posttest");
+        }
+    }, [logVisit, allCompleted]);
+
+    if (!allCompleted) {
+        return null;
+    }
 
     return (
         <div className="gradient-cool min-h-screen py-12">
@@ -55,7 +73,7 @@ export default function PosttestPage() {
                 {/* Checklist Card */}
                 <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up stagger-2">
                     <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <span>✅</span> ก่อนทำแบบทดสอบ ตรวจสอบว่าคุณได้ศึกษา
+                        <span>✅</span> คุณได้ศึกษาครบทุกบทแล้ว
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {[
@@ -66,10 +84,11 @@ export default function PosttestPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="flex items-center gap-3 p-3 rounded-xl bg-white/50"
+                                className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200"
                             >
                                 <span className="text-xl">{item.icon}</span>
                                 <span className="text-sm text-slate-700">{item.text}</span>
+                                <span className="ml-auto text-emerald-600 font-bold">✓</span>
                             </div>
                         ))}
                     </div>
@@ -84,13 +103,13 @@ export default function PosttestPage() {
                     <div className="flex flex-col sm:flex-row gap-4">
                         <FormButton
                             label="ทำแบบทดสอบหลังเรียน"
-                            url={courseInfo.posttestFormUrl}
+                            url={getUrl("posttest_formUrl", courseInfo.posttestFormUrl)}
                             icon="form"
                             variant="primary"
                         />
                         <FormButton
                             label="ดูผลคะแนน"
-                            url={courseInfo.posttestSheetUrl}
+                            url={getUrl("posttest_sheetUrl", courseInfo.posttestSheetUrl)}
                             icon="sheet"
                             variant="secondary"
                         />

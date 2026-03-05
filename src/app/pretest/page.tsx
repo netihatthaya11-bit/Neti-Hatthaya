@@ -5,9 +5,11 @@ import FormButton from "@/components/FormButton";
 import { courseInfo } from "@/data/lessonsData";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLinkSettings } from "@/contexts/LinkSettingsContext";
 
 export default function PretestPage() {
     const { logVisit } = useAuth();
+    const { getUrl } = useLinkSettings();
 
     useEffect(() => {
         logVisit("/pretest");
@@ -61,13 +63,13 @@ export default function PretestPage() {
                     <div className="flex flex-col sm:flex-row gap-4">
                         <FormButton
                             label="ทำแบบทดสอบก่อนเรียน"
-                            url={courseInfo.pretestFormUrl}
+                            url={getUrl("pretest_formUrl", courseInfo.pretestFormUrl)}
                             icon="form"
                             variant="primary"
                         />
                         <FormButton
                             label="ดูผลคะแนน"
-                            url={courseInfo.pretestSheetUrl}
+                            url={getUrl("pretest_sheetUrl", courseInfo.pretestSheetUrl)}
                             icon="sheet"
                             variant="secondary"
                         />

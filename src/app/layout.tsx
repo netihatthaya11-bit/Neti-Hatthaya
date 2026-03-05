@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LinkSettingsProvider } from "@/contexts/LinkSettingsContext";
 import AuthGuard from "@/components/AuthGuard";
 
 
@@ -28,13 +29,16 @@ export default function RootLayout({
     <html lang="th">
       <body className={`${prompt.variable} antialiased`}>
         <AuthProvider>
-          <AuthGuard>
-            <Navbar />
-            <main className="pt-16 min-h-screen">{children}</main>
-            <Footer />
-          </AuthGuard>
+          <LinkSettingsProvider>
+            <AuthGuard>
+              <Navbar />
+              <main className="pt-16 min-h-screen">{children}</main>
+              <Footer />
+            </AuthGuard>
+          </LinkSettingsProvider>
         </AuthProvider>
       </body>
     </html>
   );
 }
+

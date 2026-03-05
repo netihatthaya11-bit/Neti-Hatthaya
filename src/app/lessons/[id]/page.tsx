@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { lessons } from "@/data/lessonsData";
 import LessonContent from "@/components/LessonContent";
+import LessonLocked from "@/components/LessonLocked";
 
 interface LessonPageProps {
     params: Promise<{ id: string }>;
@@ -25,10 +26,13 @@ export default async function LessonPage({ params }: LessonPageProps) {
     const nextLesson = lessons.find((l) => l.id === lessonId + 1);
 
     return (
-        <LessonContent
-            lesson={lesson}
-            prevLesson={prevLesson}
-            nextLesson={nextLesson}
-        />
+        <>
+            <LessonLocked lessonId={lessonId} />
+            <LessonContent
+                lesson={lesson}
+                prevLesson={prevLesson}
+                nextLesson={nextLesson}
+            />
+        </>
     );
 }

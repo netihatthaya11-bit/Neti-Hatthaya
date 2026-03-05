@@ -5,23 +5,30 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePathname } from "next/navigation";
 
-const navLinks = [
-    { href: "/", label: "หน้าแรก", icon: "🏠" },
-    { href: "/pretest", label: "ก่อนเรียน", icon: "📝" },
-    { href: "/lessons/1", label: "บทที่ 1", icon: "📖" },
-    { href: "/lessons/2", label: "บทที่ 2", icon: "📖" },
-    { href: "/lessons/3", label: "บทที่ 3", icon: "📖" },
-    { href: "/lessons/4", label: "บทที่ 4", icon: "📖" },
-    { href: "/posttest", label: "หลังเรียน", icon: "📝" },
-];
-
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const { user } = useAuth();
+    const { user, completedLessons } = useAuth();
     const pathname = usePathname();
 
-    // Don't show navbar on login page
-    if (pathname === "/login") return null;
+    // Don't show navbar on login/register/admin pages
+    if (pathname === "/login" || pathname === "/register" || pathname.startsWith("/admin")) return null;
+
+    // Check if a lesson is unlocked
+    const isLessonUnlocked = (lessonId: number) =>
+        lessonId === 1 || completedLessons.includes(lessonId - 1);
+
+    // Check if posttest is unlocked (all 4 lessons completed)
+    const isPosttestUnlocked = completedLessons.includes(4);
+
+    const navLinks = [
+        { href: "/", label: "หน้าแรก", icon: "🏠", locked: false },
+        { href: "/pretest", label: "ก่อนเรียน", icon: "📝", locked: false },
+        { href: "/lessons/1", label: "บทที่ 1", icon: isLessonUnlocked(1) ? "📖" : "🔒", locked: !isLessonUnlocked(1) },
+        { href: "/lessons/2", label: "บทที่ 2", icon: isLessonUnlocked(2) ? "📖" : "🔒", locked: !isLessonUnlocked(2) },
+        { href: "/lessons/3", label: "บทที่ 3", icon: isLessonUnlocked(3) ? "📖" : "🔒", locked: !isLessonUnlocked(3) },
+        { href: "/lessons/4", label: "บทที่ 4", icon: isLessonUnlocked(4) ? "📖" : "🔒", locked: !isLessonUnlocked(4) },
+        { href: "/posttest", label: "หลังเรียน", icon: isPosttestUnlocked ? "📝" : "🔒", locked: !isPosttestUnlocked },
+    ];
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-white/10 shadow-lg">
@@ -39,6 +46,20 @@ export default function Navbar() {
                     <div className="hidden lg:flex items-center gap-1">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
+
+                            if (link.locked) {
+                                return (
+                                    <span
+                                        key={link.href}
+                                        className="flex items-center gap-2 px-4 py-2 rounded-xl text-slate-500 cursor-not-allowed font-medium select-none"
+                                        title="ยังไม่ปลดล็อก"
+                                    >
+                                        <span className="text-xl">{link.icon}</span>
+                                        <span>{link.label}</span>
+                                    </span>
+                                );
+                            }
+
                             return (
                                 <Link
                                     key={link.href}
@@ -109,6 +130,19 @@ export default function Navbar() {
                     <div className="px-4 py-3 space-y-1">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
+
+                            if (link.locked) {
+                                return (
+                                    <span
+                                        key={link.href}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-slate-500 cursor-not-allowed select-none"
+                                    >
+                                        <span className="text-xl">{link.icon}</span>
+                                        <span>{link.label}</span>
+                                    </span>
+                                );
+                            }
+
                             return (
                                 <Link
                                     key={link.href}
