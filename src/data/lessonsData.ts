@@ -69,7 +69,7 @@ export const lessons: Lesson[] = [
           title: "รีซีฟเวอร์/ดรายเออร์ และ Accumulator",
           detail:
             "รีซีฟเวอร์ดรายเออร์ใช้ในระบบ TXV ทำหน้าที่เก็บน้ำยาส่วนเกิน กรองสิ่งสกปรก และดูดความชื้น ส่วน Accumulator ใช้ในระบบ Orifice Tube ทำหน้าที่กันไม่ให้น้ำยาที่เป็นของเหลวไหลกลับเข้าคอมเพรสเซอร์",
-          imageUrl: "/images/receiver-drier.png",
+          imageUrl: "/images/receiver-drier-v2.jpg",
         },
       ],
       keyPoints: [

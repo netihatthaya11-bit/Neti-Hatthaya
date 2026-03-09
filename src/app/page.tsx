@@ -1,3 +1,6 @@
+
+
+
 import Link from "next/link";
 import LessonCard from "@/components/LessonCard";
 import { lessons, courseInfo } from "@/data/lessonsData";

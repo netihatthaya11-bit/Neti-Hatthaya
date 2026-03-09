@@ -193,12 +193,12 @@ export default function LessonContent({
                                 >
                                     {index + 1}
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-bold text-slate-800 mb-3">
+                                <div className="flex-1 w-full flex flex-col items-center md:items-start md:flex-none md:w-auto md:flex-1">
+                                    <h3 className={`text-lg font-bold text-slate-800 mb-3 ${lesson.id === 1 ? 'text-center md:text-left w-full' : ''}`}>
                                         {topic.title}
                                     </h3>
                                     {topic.imageUrl && (
-                                        <div className="my-3">
+                                        <div className={`my-3 ${lesson.id === 1 ? 'flex justify-center w-full' : ''}`}>
                                             <div className="w-[180px] h-[180px] rounded-lg overflow-hidden border border-slate-200 shadow-sm">
                                                 <img
                                                     src={topic.imageUrl}
