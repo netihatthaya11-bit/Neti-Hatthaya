@@ -2,9 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import FormButton from "@/components/FormButton";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLinkSettings } from "@/contexts/LinkSettingsContext";
 import { Lesson } from "@/data/lessonsData";
 
 interface LessonContentProps {
@@ -19,6 +21,8 @@ export default function LessonContent({
     nextLesson,
 }: LessonContentProps) {
     const { logVisit, completedLessons, markLessonComplete } = useAuth();
+    const { getUrl } = useLinkSettings();
+    const router = useRouter();
     const [timeLeft, setTimeLeft] = useState(lesson.minDuration);
     const [isCompleted, setIsCompleted] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -44,7 +48,6 @@ export default function LessonContent({
                 if (prev <= 1) {
                     clearInterval(timerRef.current!);
                     setIsCompleted(true);
-                    markLessonComplete(lesson.id);
                     return 0;
                 }
                 return prev - 1;
@@ -54,7 +57,17 @@ export default function LessonContent({
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isCompleted, lesson.id, markLessonComplete]);
+    }, [isCompleted, lesson.id]);
+
+    // Handle "ไปบทถัดไป" button click
+    const handleGoToNext = () => {
+        markLessonComplete(lesson.id);
+        if (nextLesson) {
+            router.push(`/lessons/${nextLesson.id}`);
+        } else {
+            router.push("/posttest");
+        }
+    };
 
     // Format time (mm:ss)
     const formatTime = (seconds: number) => {
@@ -97,9 +110,10 @@ export default function LessonContent({
                                 }
                                 return url;
                             };
-                            const embedUrl = getEmbedUrl(lesson.videoUrl);
-                            const isYouTube = lesson.videoUrl.includes("youtube.com") || lesson.videoUrl.includes("youtu.be");
-                            const isMurf = lesson.videoUrl.includes("murf.ai");
+                            const videoUrl = getUrl(`lesson_${lesson.id}_videoUrl`, lesson.videoUrl);
+                            const embedUrl = getEmbedUrl(videoUrl);
+                            const isYouTube = videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be");
+                            const isMurf = videoUrl.includes("murf.ai");
 
                             return isYouTube ? (
                                 <iframe
@@ -116,7 +130,7 @@ export default function LessonContent({
                                 <iframe
                                     width="100%"
                                     height="100%"
-                                    src={lesson.videoUrl}
+                                    src={videoUrl}
                                     title={lesson.title}
                                     frameBorder="0"
                                     allow="autoplay"
@@ -256,25 +270,59 @@ export default function LessonContent({
 
                         <FormButton
                             label={`แบบฝึกหัดที่ ${lesson.id}`}
-                            url={lesson.formUrl}
+                            url={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl)}
                             icon="form"
                             variant="primary"
                         />
                         <FormButton
                             label="ดูคะแนน / เอกสาร"
-                            url={lesson.sheetUrl}
+                            url={getUrl(`lesson_${lesson.id}_sheetUrl`, lesson.sheetUrl)}
                             icon="sheet"
                             variant="secondary"
                         />
-                        {lesson.uploadUrl && (
-                            <FormButton
-                                label="ส่งวิดีโอปฏิบัติ"
-                                url={lesson.uploadUrl}
-                                icon="upload"
-                                variant="upload"
-                            />
-                        )}
                     </div>
+                </div>
+
+                {/* ปุ่มไปบทถัดไป */}
+                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up text-center">
+                    {isCompleted ? (
+                        <div>
+                            <div className="text-5xl mb-4">🎉</div>
+                            <h2 className="text-xl font-bold text-slate-800 mb-2">
+                                เรียนจบบทที่ {lesson.id} แล้ว!
+                            </h2>
+                            <p className="text-slate-600 text-sm mb-6">
+                                {nextLesson
+                                    ? `กดปุ่มด้านล่างเพื่อปลดล็อกและไปบทที่ ${nextLesson.id}`
+                                    : "กดปุ่มด้านล่างเพื่อไปทำแบบทดสอบหลังเรียน"
+                                }
+                            </p>
+                            <button
+                                onClick={handleGoToNext}
+                                className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg"
+                            >
+                                <span>
+                                    {nextLesson
+                                        ? `🔓 ไปบทที่ ${nextLesson.id}`
+                                        : "🔓 ไปแบบทดสอบหลังเรียน"
+                                    }
+                                </span>
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <div className="text-5xl mb-4">🔒</div>
+                            <h2 className="text-xl font-bold text-slate-800 mb-2">
+                                กำลังเรียนบทที่ {lesson.id}
+                            </h2>
+                            <p className="text-slate-600 text-sm">
+                                กรุณาศึกษาเนื้อหาให้ครบ เหลือเวลา <span className="font-bold text-amber-600">{formatTime(timeLeft)}</span> นาที
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Navigation */}
@@ -294,27 +342,12 @@ export default function LessonContent({
                             ← แบบทดสอบก่อนเรียน
                         </Link>
                     )}
-
-                    {nextLesson ? (
-                        <Link
-                            href={`/lessons/${nextLesson.id}`}
-                            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white font-bold px-6 py-3 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all"
-                        >
-                            บทที่ {nextLesson.id} →
-                        </Link>
-                    ) : (
-                        <div className="relative">
-                            {!isCompleted && (
-                                <div className="absolute inset-0 bg-white/80 z-20 cursor-not-allowed rounded-xl"></div>
-                            )}
-                            <Link
-                                href="/posttest"
-                                className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white font-bold px-6 py-3 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all"
-                            >
-                                แบบทดสอบหลังเรียน →
-                            </Link>
-                        </div>
-                    )}
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-medium"
+                    >
+                        🏠 หน้าแรก
+                    </Link>
                 </div>
             </div>
         </div>

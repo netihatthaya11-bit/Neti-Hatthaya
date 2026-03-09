@@ -4,9 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function LoginPage() {
-    const { login } = useAuth();
-    const [studentId, setStudentId] = useState("");
+export default function RegisterPage() {
+    const { register } = useAuth();
+    const [formData, setFormData] = useState({
+        name: "",
+        studentId: "",
+        room: "",
+    });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -14,9 +18,9 @@ export default function LoginPage() {
         e.preventDefault();
         setErrorMessage("");
 
-        if (studentId.trim()) {
+        if (formData.name && formData.studentId && formData.room) {
             setIsSubmitting(true);
-            const result = await login(studentId.trim());
+            const result = await register(formData);
             if (!result.success) {
                 setErrorMessage(result.error || "เกิดข้อผิดพลาด");
             }
@@ -45,16 +49,33 @@ export default function LoginPage() {
 
             <div className="glass-card w-full max-w-md p-8 rounded-2xl shadow-2xl animate-fade-in-up md:p-10 bg-white/90 backdrop-blur-xl">
                 <div className="text-center mb-8">
-                    <div className="text-6xl mb-4">❄️</div>
+                    <div className="text-6xl mb-4">📝</div>
                     <h1 className="text-2xl font-bold text-slate-800 mb-2">
-                        เข้าสู่ระบบ
+                        สมัครสมาชิก
                     </h1>
                     <p className="text-slate-600 text-sm">
-                        วิชางานปรับอากาศรถยนต์
+                        ลงทะเบียนเพื่อเข้าเรียนวิชางานปรับอากาศรถยนต์
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-sm font-medium text-black mb-2">
+                            ชื่อ-นามสกุล
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-black"
+                            placeholder="เช่น นายรักเรียน ขยันยิ่ง"
+                            value={formData.name}
+                            onChange={(e) => {
+                                setFormData({ ...formData, name: e.target.value });
+                                setErrorMessage("");
+                            }}
+                        />
+                    </div>
+
                     <div>
                         <label className="block text-sm font-medium text-black mb-2">
                             รหัสนักเรียน
@@ -64,9 +85,26 @@ export default function LoginPage() {
                             required
                             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-black"
                             placeholder="เช่น 662010123"
-                            value={studentId}
+                            value={formData.studentId}
                             onChange={(e) => {
-                                setStudentId(e.target.value);
+                                setFormData({ ...formData, studentId: e.target.value });
+                                setErrorMessage("");
+                            }}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-black mb-2">
+                            ชั้น/ห้อง
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-black"
+                            placeholder="เช่น ปวช. 2/1"
+                            value={formData.room}
+                            onChange={(e) => {
+                                setFormData({ ...formData, room: e.target.value });
                                 setErrorMessage("");
                             }}
                         />
@@ -87,7 +125,7 @@ export default function LoginPage() {
                         disabled={isSubmitting}
                         className="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
-                        <span>{isSubmitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}</span>
+                        <span>{isSubmitting ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก & เข้าสู่บทเรียน"}</span>
                         <svg
                             className="w-5 h-5"
                             fill="none"
@@ -106,16 +144,16 @@ export default function LoginPage() {
 
                 <div className="mt-8 pt-6 border-t border-slate-200 text-center">
                     <p className="text-slate-500 text-sm mb-3">
-                        ยังไม่มีบัญชี?
+                        มีบัญชีอยู่แล้ว?
                     </p>
                     <Link
-                        href="/register"
+                        href="/login"
                         className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-bold text-sm transition-colors hover:underline"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                         </svg>
-                        สมัครสมาชิกใหม่
+                        เข้าสู่ระบบ
                     </Link>
                 </div>
             </div>
