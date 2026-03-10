@@ -65,6 +65,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const fetchUserData = async (userId: string) => {
         try {
+            if (!supabase) return;
+
             const { data: logs } = await supabase
                 .from("visit_logs")
                 .select("path, visited_at")
@@ -99,6 +101,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const login = useCallback(
         async (studentId: string): Promise<{ success: boolean; error?: string }> => {
             try {
+                if (!supabase) throw new Error("Supabase client not initialized");
+
                 const { data: existing, error } = await supabase
                     .from("students")
                     .select("*")
@@ -133,6 +137,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const register = useCallback(
         async (userData: { name: string; studentId: string; room: string }): Promise<{ success: boolean; error?: string }> => {
             try {
+                if (!supabase) throw new Error("Supabase client not initialized");
+
                 // ตรวจสอบว่ารหัสนักเรียนซ้ำหรือไม่
                 const { data: existing } = await supabase
                     .from("students")
@@ -201,7 +207,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 return updatedLogs;
             });
 
-            if (user.id) {
+            if (user.id && supabase) {
                 supabase
                     .from("visit_logs")
                     .insert({ student_id: user.id, path })
@@ -223,7 +229,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                         JSON.stringify(updatedCompleted)
                     );
 
-                    if (user?.id) {
+                    if (user?.id && supabase) {
                         supabase
                             .from("completed_lessons")
                             .insert({ student_id: user.id, lesson_id: lessonId })
