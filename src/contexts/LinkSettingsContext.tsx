@@ -26,6 +26,12 @@ export function LinkSettingsProvider({ children }: { children: ReactNode }) {
 
     const fetchSettings = useCallback(async () => {
         try {
+            if (!supabase) {
+                console.warn("Supabase client not initialized (missing env vars)");
+                setLoading(false);
+                return;
+            }
+
             const { data, error } = await supabase
                 .from("link_settings")
                 .select("key, url");
@@ -63,6 +69,10 @@ export function LinkSettingsProvider({ children }: { children: ReactNode }) {
 
     const setUrl = useCallback(
         async (key: string, url: string) => {
+            if (!supabase) {
+                throw new Error("Supabase client not initialized");
+            }
+
             // Upsert: insert or update
             const { error } = await supabase
                 .from("link_settings")
