@@ -211,23 +211,25 @@ export default function LessonContent({
                                     <h3 className="text-lg font-bold text-slate-800 mb-3">
                                         {topic.title}
                                     </h3>
+                                    
+                                    {topic.imageUrl && (
+                                        <div className="w-full flex justify-center my-6">
+                                            <div className="w-[200px] h-[200px] rounded-xl overflow-hidden shadow-md bg-white border border-slate-100 flex items-center justify-center p-2">
+                                                <img
+                                                    src={topic.imageUrl}
+                                                    alt={topic.title}
+                                                    className="max-w-full max-h-full object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+                                                    onClick={() => window.open(topic.imageUrl!, '_blank')}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <p className="text-slate-600 leading-relaxed text-sm">
+                                        {topic.detail}
+                                    </p>
                                 </div>
                             </div>
-                            {topic.imageUrl && (
-                                <div className="my-4 flex justify-center w-full">
-                                    <div className="w-[180px] h-[180px] rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white flex items-center justify-center">
-                                        <img
-                                            src={topic.imageUrl}
-                                            alt={topic.title}
-                                            className="max-w-full max-h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
-                                            onClick={() => window.open(topic.imageUrl, '_blank')}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                            <p className="text-slate-600 leading-relaxed text-sm mt-2">
-                                {topic.detail}
-                            </p>
                         </div>
                     ))}
                 </div>
