@@ -213,7 +213,7 @@ export default function LessonContent({
                                     </h3>
                                     
                                     {topic.imageUrl && (
-                                        <div className="w-full flex justify-center my-6">
+                                        <div className="-ml-[56px] w-[calc(100%+56px)] flex justify-center my-6">
                                             <div className="w-[200px] h-[200px] rounded-xl overflow-hidden shadow-md bg-white border border-slate-100 flex items-center justify-center p-2">
                                                 <img
                                                     src={topic.imageUrl}
