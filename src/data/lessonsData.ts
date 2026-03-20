@@ -35,7 +35,7 @@ export const lessons: Lesson[] = [
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScEDmKbrgliYNnpYFfDU8Di_KON-rn7U5djef3GlXwp1fDO3A/viewform?usp=dialog",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://www.youtube.com/watch?v=4FDs7Lcvr7A",
+    videoUrl: "https://youtu.be/lKKXJ2X1pjc",
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:
@@ -91,7 +91,7 @@ export const lessons: Lesson[] = [
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScCHTsahpua4Kn6kLhpg7J7iausRRHqM83gBEnhTr1l0T76xw/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://youtu.be/0FAPEoP6wrQ", // Updated video link
+    videoUrl: "https://youtu.be/OkliQITDd8E",
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:
@@ -132,7 +132,7 @@ export const lessons: Lesson[] = [
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdP0rhvo0ABBPUdH3EKDCaHGEE3qb3GVoh7DcU7jQF8t8hNpg/viewform?usp=dialog",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://www.youtube.com/watch?v=GNH8cNmXQoY",
+    videoUrl: "https://youtu.be/Cwy5yFHIwhw",
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:
