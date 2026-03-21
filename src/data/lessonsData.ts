@@ -96,7 +96,7 @@ export const lessons: Lesson[] = [
     content: {
       overview:
         "หัวใจสำคัญของระบบแอร์คือ 'การเปลี่ยนสถานะ' ของสารทำความเย็น เพื่อดูดซับและคายความร้อน โดยเปลี่ยนจากของเหลวเป็นก๊าซ (ดูดความร้อน) และจากก๊าซเป็นของเหลว (คายความร้อน)",
-      overviewImageUrl: "/images/refrigeration-cycle.webp",
+      overviewImageUrl: "/images/refrigeration-cycle.png",
       topics: [
         {
           title: "การเปลี่ยนสถานะ (State Change)",
