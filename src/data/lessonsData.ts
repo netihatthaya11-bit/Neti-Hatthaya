@@ -184,7 +184,7 @@ export const lessons: Lesson[] = [
     formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdBFtdhrsiDrtq2hH7z8OufQMeqe1Nk-XRYhq5ck2F5TmyOaA/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://www.youtube.com/watch?v=XIKKMvWx3SA", // Updated video link
+    videoUrl: "https://youtu.be/ISHWNgSTz1g",
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:
