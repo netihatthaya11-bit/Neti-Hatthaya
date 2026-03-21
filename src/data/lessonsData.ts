@@ -32,7 +32,7 @@ export const lessons: Lesson[] = [
     description: "ศึกษาชิ้นส่วนหลักของระบบ A/C: คอมเพรสเซอร์ คอนเดนเซอร์ อีวาพอเรเตอร์ วาล์วขยายตัว และรีซีฟเวอร์",
     icon: "🔧",
     color: "from-cyan-400 to-teal-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScEDmKbrgliYNnpYFfDU8Di_KON-rn7U5djef3GlXwp1fDO3A/viewform?usp=dialog",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSddklNwyGdf06GlQfM-swzvhQd9JkiHPTADMZb1uuwhNV_Flw/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/lKKXJ2X1pjc",
@@ -88,7 +88,7 @@ export const lessons: Lesson[] = [
     description: "เรียนรู้หลักการพื้นฐาน เน้นการเปลี่ยนสถานะของสารทำความเย็นในวงจรทำความเย็น",
     icon: "❄️",
     color: "from-sky-400 to-blue-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScCHTsahpua4Kn6kLhpg7J7iausRRHqM83gBEnhTr1l0T76xw/viewform?usp=header",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeGOp6xmIi-yXHkSmnd-rf6zqHfem7rECW-3tEIfyF7k8hoCg/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/OkliQITDd8E",
@@ -129,7 +129,7 @@ export const lessons: Lesson[] = [
     description: "รู้จักชนิดสารทำความเย็น R-134a, R-1234yf คุณสมบัติ ข้อควรระวัง และน้ำมันคอมเพรสเซอร์",
     icon: "🧪",
     color: "from-violet-400 to-purple-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdP0rhvo0ABBPUdH3EKDCaHGEE3qb3GVoh7DcU7jQF8t8hNpg/viewform?usp=dialog",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSejThNGPmOT7EAJfQHpFbeu1SOVGG7CERK1II4Hq5yCtFrfAQ/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/Cwy5yFHIwhw",
@@ -181,10 +181,10 @@ export const lessons: Lesson[] = [
     description: "เรียนรู้ขั้นตอนการตรวจเช็คระบบ การเติมน้ำยาแอร์ การตรวจรอยรั่ว และการบำรุงรักษาตามระยะ",
     icon: "🛠️",
     color: "from-emerald-400 to-green-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe6hCq9WwfELgkPY78o2HFo80TXLSU_xhGToBfjWAAwdav_JQ/viewform?usp=dialog",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdBFtdhrsiDrtq2hH7z8OufQMeqe1Nk-XRYhq5ck2F5TmyOaA/viewform?usp=header",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
-    videoUrl: "https://youtu.be/ISHWNgSTz1g",
+    videoUrl: "https://www.youtube.com/watch?v=XIKKMvWx3SA", // Updated video link
     minDuration: 10, // 10 seconds for testing
     content: {
       overview:
@@ -228,9 +228,9 @@ export const courseInfo = {
   description:
     "สรุปเนื้อหาและสื่อการเรียนรู้ระบบปรับอากาศรถยนต์ พร้อมแบบทดสอบก่อนเรียนและหลังเรียน",
   pretestFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSf-qGkk8NeHWZFwJTZzq8hQoBSk_cydO2a5sCpDtQdC7c7diw/viewform?usp=dialog",
+    "https://docs.google.com/forms/d/e/1FAIpQLSepznUvGXMmZXzktA0oQ-s20SOiWxvkch2BNUX7hZCKcb5TTw/viewform?usp=header",
   pretestSheetUrl:
     "https://docs.google.com/spreadsheets/d/1kfPKzZVDBFuWZt55Eg98t0N7MFo5ZUfpfOYEwN6JRtU/edit?gid=0#gid=0",
-  posttestFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfYTXT24Bzgf5Mqbcsi46AQDolwP3VdHfgUVKpp0NDUshgt4w/viewform?usp=dialog",
+  posttestFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSepznUvGXMmZXzktA0oQ-s20SOiWxvkch2BNUX7hZCKcb5TTw/viewform?usp=header",
   posttestSheetUrl: "https://docs.google.com/spreadsheets",
 };
