@@ -57,19 +57,19 @@ export const lessons: Lesson[] = [
           title: "อีวาพอเรเตอร์ (Evaporator)",
           detail:
             "ติดตั้งอยู่ภายในห้องโดยสาร ทำหน้าที่ดูดซับความร้อนจากอากาศภายในรถ สารทำความเย็นจะระเหยจากของเหลวเป็นก๊าซ ทำให้อากาศที่ผ่านครีบระบายความร้อนเย็นลง พัดลมจะส่งลมเย็นเข้าห้องโดยสาร",
-          imageUrl: "/images/evaporator-v2.jpg",
+          imageUrl: "/images/evaporator-v2.png",
         },
         {
           title: "วาล์วขยายตัว / หลอดคาปิลลารี",
           detail:
             "ทำหน้าที่ลดความดันและอุณหภูมิของสารทำความเย็นก่อนเข้าอีวาพอเรเตอร์ มี 2 แบบหลัก: วาล์วขยายตัวแบบเทอร์โมสแตติก (TXV) ซึ่งปรับอัตราการไหลตามภาระความเย็น และหลอดคาปิลลารี (Orifice Tube) ที่มีรูขนาดคงที่",
-          imageUrl: "/images/expansion-valve-v2.jpg",
+          imageUrl: "/images/expansion-valve-v2.png",
         },
         {
           title: "รีซีฟเวอร์/ดรายเออร์ และ Accumulator",
           detail:
             "รีซีฟเวอร์ดรายเออร์ใช้ในระบบ TXV ทำหน้าที่เก็บน้ำยาส่วนเกิน กรองสิ่งสกปรก และดูดความชื้น ส่วน Accumulator ใช้ในระบบ Orifice Tube ทำหน้าที่กันไม่ให้น้ำยาที่เป็นของเหลวไหลกลับเข้าคอมเพรสเซอร์",
-          imageUrl: "/images/receiver-drier-v2.jpg",
+          imageUrl: "/images/receiver-drier-v2.png",
         },
       ],
       keyPoints: [
