@@ -57,7 +57,9 @@ export default function ProfilePage() {
                         ขอแสดงความยินดี! คุณสามารถดาวน์โหลดเกียรติบัตรเพื่อรับรองการผ่านการอบรมในหลักสูตรนี้ได้ที่นี่
                     </p>
                     <Link
-                        href="#"
+                        href="https://drive.google.com/drive/folders/1pezw57miG3LU817G0_8UrtHJDCzhra5P?usp=sharing"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all font-semibold text-lg"
                     >
                         <span>📜</span> กดดูและดาวน์โหลดเกียรติบัตร
