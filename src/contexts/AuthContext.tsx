@@ -73,13 +73,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const parsed = JSON.parse(storedUser) as User;
             setUser(parsed);
 
-            // โหลด logs และ completed จาก localStorage
+            // โหลด logs จาก localStorage
             const storedLogs = localStorage.getItem("ac_course_logs");
-            const storedCompleted = localStorage.getItem("ac_course_completed");
+            const storedCompleted = localStorage.getItem(`ac_completed_${parsed.studentId}`);
             const storedSessions = localStorage.getItem(`ac_sessions_${parsed.studentId}`);
             
             if (storedLogs) setVisitLogs(JSON.parse(storedLogs));
-            if (storedCompleted) setCompletedLessons(JSON.parse(storedCompleted));
+            if (storedCompleted) {
+                setCompletedLessons(JSON.parse(storedCompleted));
+            } else {
+                // Fallback for legacy global completed lessons
+                const legacyCompleted = localStorage.getItem("ac_course_completed");
+                if (legacyCompleted) {
+                    setCompletedLessons(JSON.parse(legacyCompleted));
+                    localStorage.setItem(`ac_completed_${parsed.studentId}`, legacyCompleted);
+                }
+            }
             if (storedSessions) setSessions(JSON.parse(storedSessions));
         }
         setLoading(false);
@@ -104,12 +113,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(found);
                 localStorage.setItem("ac_course_user", JSON.stringify(found));
 
-                // Add login session
+                // Load login session
                 const sessionsData = localStorage.getItem(`ac_sessions_${found.studentId}`);
                 let userSessions: SessionLog[] = sessionsData ? JSON.parse(sessionsData) : [];
                 userSessions.push({ loginAt: new Date().toISOString(), logoutAt: null });
                 localStorage.setItem(`ac_sessions_${found.studentId}`, JSON.stringify(userSessions));
                 setSessions(userSessions);
+
+                // Load completed lessons
+                const completedData = localStorage.getItem(`ac_completed_${found.studentId}`);
+                if (completedData) {
+                    setCompletedLessons(JSON.parse(completedData));
+                } else {
+                    const legacyCompleted = localStorage.getItem("ac_course_completed");
+                    if (legacyCompleted) {
+                        setCompletedLessons(JSON.parse(legacyCompleted));
+                        localStorage.setItem(`ac_completed_${found.studentId}`, legacyCompleted);
+                    } else {
+                        setCompletedLessons([]);
+                    }
+                }
 
                 router.push("/");
                 return { success: true };
@@ -160,6 +183,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 localStorage.setItem(`ac_sessions_${newUser.studentId}`, JSON.stringify(userSessions));
                 setSessions(userSessions);
 
+                // Initialize completed lessons
+                setCompletedLessons([]);
+
                 router.push("/");
                 return { success: true };
             } catch (error) {
@@ -188,7 +214,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setCompletedLessons([]);
         localStorage.removeItem("ac_course_user");
         localStorage.removeItem("ac_course_logs");
-        localStorage.removeItem("ac_course_completed");
         router.push("/login");
     }, [router, user]);
 
@@ -212,11 +237,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const markLessonComplete = useCallback(
         (lessonId: number) => {
+            if (!user) return;
             setCompletedLessons((prev) => {
                 if (!prev.includes(lessonId)) {
                     const updatedCompleted = [...prev, lessonId];
                     localStorage.setItem(
-                        "ac_course_completed",
+                        `ac_completed_${user.studentId}`,
                         JSON.stringify(updatedCompleted)
                     );
                     return updatedCompleted;
@@ -224,7 +250,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 return prev;
             });
         },
-        []
+        [user]
     );
 
     return (
