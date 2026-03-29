@@ -36,7 +36,7 @@ export const lessons: Lesson[] = [
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/lKKXJ2X1pjc",
-    minDuration: 10, // 10 seconds for testing
+    minDuration: 300, // 5 minutes (300 seconds)
     content: {
       overview:
         "ระบบปรับอากาศรถยนต์ประกอบด้วยชิ้นส่วนหลัก 5 ส่วน ซึ่งแต่ละส่วนมีหน้าที่สำคัญในกระบวนการทำความเย็น การเข้าใจหน้าที่และการทำงานของแต่ละชิ้นส่วนจะช่วยในการตรวจเช็คและซ่อมบำรุงได้อย่างถูกต้อง",
@@ -92,7 +92,7 @@ export const lessons: Lesson[] = [
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/OkliQITDd8E",
-    minDuration: 10, // 10 seconds for testing
+    minDuration: 300, // 5 minutes (300 seconds)
     content: {
       overview:
         "หัวใจสำคัญของระบบแอร์คือ 'การเปลี่ยนสถานะ' ของสารทำความเย็น เพื่อดูดซับและคายความร้อน โดยเปลี่ยนจากของเหลวเป็นก๊าซ (ดูดความร้อน) และจากก๊าซเป็นของเหลว (คายความร้อน)",
@@ -133,7 +133,7 @@ export const lessons: Lesson[] = [
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/Cwy5yFHIwhw",
-    minDuration: 10, // 10 seconds for testing
+    minDuration: 300, // 5 minutes (300 seconds)
     content: {
       overview:
         "สารทำความเย็นเป็นตัวกลางสำคัญในการทำความเย็น การเลือกใช้สารที่ถูกต้องและการจัดการอย่างปลอดภัย รวมถึงขั้นตอนการบำรุงรักษาและการเปลี่ยนถ่ายน้ำมันคอมเพรสเซอร์อย่างถูกวิธี จะช่วยให้ระบบทำงานได้อย่างมีประสิทธิภาพและยาวนาน",
@@ -189,7 +189,7 @@ export const lessons: Lesson[] = [
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/ISHWNgSTz1g",
-    minDuration: 10, // 10 seconds for testing
+    minDuration: 300, // 5 minutes (300 seconds)
     content: {
       overview:
         "การบำรุงรักษาระบบปรับอากาศอย่างสม่ำเสมอจะช่วยให้ระบบทำงานได้อย่างมีประสิทธิภาพ ยืดอายุการใช้งาน และป้องกันการเสียหายที่มีค่าใช้จ่ายสูง ควรตรวจเช็คอย่างน้อยปีละ 1 ครั้ง",
