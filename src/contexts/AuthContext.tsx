@@ -65,6 +65,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    const filterOldSessions = (sessionsData: SessionLog[]) => {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        return sessionsData.filter((s) => new Date(s.loginAt) >= thirtyDaysAgo);
+    };
+
     // Load user from localStorage on mount
     useEffect(() => {
         const storedUser = localStorage.getItem("ac_course_user");
@@ -89,7 +95,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     localStorage.setItem(`ac_completed_${parsed.studentId}`, legacyCompleted);
                 }
             }
-            if (storedSessions) setSessions(JSON.parse(storedSessions));
+            if (storedSessions) {
+                const parsedSessions = JSON.parse(storedSessions);
+                const validSessions = filterOldSessions(parsedSessions);
+                if (validSessions.length !== parsedSessions.length) {
+                    localStorage.setItem(`ac_sessions_${parsed.studentId}`, JSON.stringify(validSessions));
+                }
+                setSessions(validSessions);
+            }
         }
         setLoading(false);
     }, []);
@@ -116,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // Load login session
                 const sessionsData = localStorage.getItem(`ac_sessions_${found.studentId}`);
                 let userSessions: SessionLog[] = sessionsData ? JSON.parse(sessionsData) : [];
+                userSessions = filterOldSessions(userSessions);
                 userSessions.push({ loginAt: new Date().toISOString(), logoutAt: null });
                 localStorage.setItem(`ac_sessions_${found.studentId}`, JSON.stringify(userSessions));
                 setSessions(userSessions);

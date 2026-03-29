@@ -63,21 +63,31 @@ export default function ProfilePage() {
                         <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
                             ⏱️
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-800">ประวัติการเข้าใช้งานล่าสุด</h2>
+                        <h2 className="text-2xl font-bold text-slate-800">ประวัติการเข้าใช้งาน (30 วันล่าสุด)</h2>
                     </div>
-                    {sessions && sessions.length > 1 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-white/60 p-4 rounded-xl border border-slate-100">
-                                <p className="text-sm text-slate-500 mb-1">เวลาเข้าสู่ระบบ (Last Login)</p>
-                                <p className="font-semibold text-slate-800">{formatDateTime(sessions[sessions.length - 2].loginAt)}</p>
-                            </div>
-                            <div className="bg-white/60 p-4 rounded-xl border border-slate-100">
-                                <p className="text-sm text-slate-500 mb-1">เวลาออกจากระบบ (Last Logout)</p>
-                                <p className="font-semibold text-slate-800">{formatDateTime(sessions[sessions.length - 2].logoutAt)}</p>
-                            </div>
+                    {sessions && sessions.length > 0 ? (
+                        <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                            {[...sessions].reverse().map((session, index) => (
+                                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between bg-white/60 p-4 rounded-xl border-l-4 border-l-blue-500 shadow-sm border-t border-r border-b border-slate-100">
+                                    <div className="mb-3 sm:mb-0">
+                                        <div className="flex items-center gap-2 text-sm text-slate-500 mb-1">
+                                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span> 
+                                            เวลาเข้าสู่ระบบ
+                                        </div>
+                                        <p className="font-semibold text-slate-800">{formatDateTime(session.loginAt)}</p>
+                                    </div>
+                                    <div className="sm:text-right">
+                                        <div className="flex items-center sm:justify-end gap-2 text-sm text-slate-500 mb-1">
+                                            <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                                            เวลาออกจากระบบ
+                                        </div>
+                                        <p className="font-semibold text-slate-800">{formatDateTime(session.logoutAt)}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     ) : (
-                        <p className="text-slate-600 text-center py-4 bg-white/40 rounded-xl">ยังไม่มีประวัติการเข้าใช้งานก่อนหน้านี้ (นี่คือการเข้าสู่ระบบครั้งแรกของคุณ)</p>
+                        <p className="text-slate-600 text-center py-4 bg-white/40 rounded-xl">ยังไม่มีประวัติการเข้าใช้งานก่อนหน้านี้</p>
                     )}
                 </div>
 
