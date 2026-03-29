@@ -269,25 +269,11 @@ export default function LessonContent({
                         </div>
                     )}
 
-                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
-                        <iframe 
-                            src={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl).replace(/viewform.*$/, "viewform?embedded=true")}
-                            width="100%" 
-                            height="2000" 
-                            frameBorder="0" 
-                            marginHeight={0} 
-                            marginWidth={0}
-                            className="w-full max-w-3xl min-h-[80vh]"
-                        >
-                            กำลังโหลด…
-                        </iframe>
-                    </div>
-
-                    <div className="mt-8 pt-8 border-t border-slate-100 flex justify-center text-center pb-4">
+                    <div className="mb-8 pb-8 border-b border-slate-100 flex justify-center text-center">
                         {isCompleted ? (
                             <div className="w-full">
                                 <h2 className="text-xl font-bold text-slate-800 mb-2">
-                                    🎉 ส่งคำตอบแบบฝึกหัดเสร็จแล้วใช่ไหม?
+                                    🎉 ปลดล็อกแล้ว! (ทำแบบฝึกหัดด้านล่างเสร็จก่อนค่อยกดไปต่อนะครับ)
                                 </h2>
                                 <p className="text-slate-600 text-sm mb-6">
                                     {nextLesson
@@ -320,6 +306,20 @@ export default function LessonContent({
                                 </p>
                             </div>
                         )}
+                    </div>
+
+                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
+                        <iframe 
+                            src={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl).replace(/viewform.*$/, "viewform?embedded=true")}
+                            width="100%" 
+                            height="2000" 
+                            frameBorder="0" 
+                            marginHeight={0} 
+                            marginWidth={0}
+                            className="w-full max-w-3xl min-h-[80vh]"
+                        >
+                            กำลังโหลด…
+                        </iframe>
                     </div>
                 </div>
 
