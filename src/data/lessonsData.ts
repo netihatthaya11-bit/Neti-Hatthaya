@@ -32,7 +32,7 @@ export const lessons: Lesson[] = [
     description: "ศึกษาชิ้นส่วนหลักของระบบ A/C: คอมเพรสเซอร์ คอนเดนเซอร์ อีวาพอเรเตอร์ วาล์วขยายตัว และรีซีฟเวอร์",
     icon: "🔧",
     color: "from-cyan-400 to-teal-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSddklNwyGdf06GlQfM-swzvhQd9JkiHPTADMZb1uuwhNV_Flw/viewform?usp=header",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeoQEHAxuCYrcR992ZjYmC1KqLwOwWA4ua1cPf8I4Z109mrDQ/viewform?embedded=true",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/lKKXJ2X1pjc",
