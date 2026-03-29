@@ -27,7 +27,7 @@ export default function Footer() {
                                         href="/lessons/1"
                                         className="text-white/70 hover:text-white transition-colors"
                                     >
-                                        บทที่ 1: หลักการทำความเย็น
+                                        บทที่ 1: ส่วนประกอบของระบบปรับอากาศรถยนต์
                                     </Link>
                                 </li>
                                 <li>
@@ -35,7 +35,7 @@ export default function Footer() {
                                         href="/lessons/2"
                                         className="text-white/70 hover:text-white transition-colors"
                                     >
-                                        บทที่ 2: ส่วนประกอบระบบ A/C
+                                        บทที่ 2: หลักการทำงานและวัฏจักรทำความเย็น
                                     </Link>
                                 </li>
                                 <li>
@@ -43,7 +43,7 @@ export default function Footer() {
                                         href="/lessons/3"
                                         className="text-white/70 hover:text-white transition-colors"
                                     >
-                                        บทที่ 3: สารทำความเย็น
+                                        บทที่ 3: สารทำความเย็นและน้ำมันคอมเพรสเซอร์
                                     </Link>
                                 </li>
                                 <li>
@@ -51,7 +51,7 @@ export default function Footer() {
                                         href="/lessons/4"
                                         className="text-white/70 hover:text-white transition-colors"
                                     >
-                                        บทที่ 4: ตรวจสอบ & บำรุงรักษา
+                                        บทที่ 4: การตรวจสอบ บำรุงรักษา และการเติมน้ำยาแอร์
                                     </Link>
                                 </li>
                             </ul>
