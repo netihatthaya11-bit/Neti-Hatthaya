@@ -54,21 +54,29 @@ export default function PretestPage() {
                     </ul>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up stagger-2">
-                    <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <span>🚀</span> เริ่มทำแบบทดสอบ
+                {/* Embedded Form */}
+                <div className="glass-card rounded-2xl p-4 sm:p-8 mb-8 animate-fade-in-up stagger-2 overflow-hidden">
+                    <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center justify-center gap-2">
+                        <span>📝</span> ทำแบบทดสอบก่อนเรียน
                     </h2>
 
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
+                        <iframe 
+                            src={getUrl("pretest_formUrl", courseInfo.pretestFormUrl).replace(/viewform.*$/, "viewform?embedded=true")}
+                            width="100%" 
+                            height="2000" 
+                            frameBorder="0" 
+                            marginHeight={0} 
+                            marginWidth={0}
+                            className="w-full max-w-3xl min-h-[80vh]"
+                        >
+                            กำลังโหลด…
+                        </iframe>
+                    </div>
+
+                    <div className="flex justify-center">
                         <FormButton
-                            label="ทำแบบทดสอบก่อนเรียน"
-                            url={getUrl("pretest_formUrl", courseInfo.pretestFormUrl)}
-                            icon="form"
-                            variant="primary"
-                        />
-                        <FormButton
-                            label="ดูผลคะแนน"
+                            label="ทดสอบเสร็จแล้ว กดดูผลคะแนน"
                             url={getUrl("pretest_sheetUrl", courseInfo.pretestSheetUrl)}
                             icon="sheet"
                             variant="secondary"

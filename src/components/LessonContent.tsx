@@ -254,30 +254,38 @@ export default function LessonContent({
                     </div>
                 </div>
 
-                {/* Google Form / Sheet Buttons */}
-                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up">
-                    <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <span>📎</span> แบบฝึกหัด & เอกสาร
+                {/* Google Form Embedded + Sheet Button */}
+                <div className="glass-card rounded-2xl p-4 sm:p-8 mb-8 animate-fade-in-up overflow-hidden relative">
+                    <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center justify-center gap-2">
+                        <span>📝</span> แบบฝึกหัดที่ {lesson.id}
                     </h2>
 
-                    <div className="flex flex-col sm:flex-row gap-4 relative">
-                        {/* Lock Overlay */}
-                        {!isCompleted && (
-                            <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center rounded-xl border border-slate-200 text-center p-4">
-                                <span className="text-3xl mb-2">🔒</span>
-                                <p className="text-slate-800 font-bold">เนื้อหาถูกล็อก</p>
-                                <p className="text-slate-600 text-xs">กรุณาดูวิดีโอหรือศึกษาเนื้อหาให้ครบ {formatTime(timeLeft)} นาที</p>
-                            </div>
-                        )}
+                    {/* Lock Overlay */}
+                    {!isCompleted && (
+                        <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center rounded-xl border border-slate-200 text-center p-4">
+                            <span className="text-3xl mb-2">🔒</span>
+                            <p className="text-slate-800 font-bold">เนื้อหาถูกล็อก</p>
+                            <p className="text-slate-600 text-xs">กรุณาดูวิดีโอหรือศึกษาเนื้อหาให้ครบ {formatTime(timeLeft)} นาที</p>
+                        </div>
+                    )}
 
+                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
+                        <iframe 
+                            src={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl).replace(/viewform.*$/, "viewform?embedded=true")}
+                            width="100%" 
+                            height="2000" 
+                            frameBorder="0" 
+                            marginHeight={0} 
+                            marginWidth={0}
+                            className="w-full max-w-3xl min-h-[80vh]"
+                        >
+                            กำลังโหลด…
+                        </iframe>
+                    </div>
+
+                    <div className="flex justify-center">
                         <FormButton
-                            label={`แบบฝึกหัดที่ ${lesson.id}`}
-                            url={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl)}
-                            icon="form"
-                            variant="primary"
-                        />
-                        <FormButton
-                            label="ดูคะแนน / เอกสาร"
+                            label="ทำเสร็จแล้ว กดดูผลคะแนน"
                             url={getUrl(`lesson_${lesson.id}_sheetUrl`, lesson.sheetUrl)}
                             icon="sheet"
                             variant="secondary"
