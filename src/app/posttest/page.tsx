@@ -102,9 +102,9 @@ export default function PosttestPage() {
 
                     <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
                         <iframe 
-                            src="https://docs.google.com/forms/d/e/1FAIpQLSepznUvGXMmZXzktA0oQ-s20SOiWxvkch2BNUX7hZCKcb5TTw/viewform?embedded=true" 
+                            src={getUrl("posttest_formUrl", courseInfo.posttestFormUrl).replace(/viewform.*$/, "viewform?embedded=true")}
                             width="100%" 
-                            height="2000" 
+                            height="8127" 
                             frameBorder="0" 
                             marginHeight={0} 
                             marginWidth={0}

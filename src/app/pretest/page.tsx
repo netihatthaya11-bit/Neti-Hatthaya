@@ -64,7 +64,7 @@ export default function PretestPage() {
                         <iframe 
                             src={getUrl("pretest_formUrl", courseInfo.pretestFormUrl).replace(/viewform.*$/, "viewform?embedded=true")}
                             width="100%" 
-                            height="2000" 
+                            height="8127" 
                             frameBorder="0" 
                             marginHeight={0} 
                             marginWidth={0}

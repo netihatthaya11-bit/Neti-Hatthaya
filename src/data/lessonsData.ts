@@ -236,9 +236,10 @@ export const courseInfo = {
   description:
     "สรุปเนื้อหาและสื่อการเรียนรู้ระบบปรับอากาศรถยนต์ พร้อมแบบทดสอบก่อนเรียนและหลังเรียน",
   pretestFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSepznUvGXMmZXzktA0oQ-s20SOiWxvkch2BNUX7hZCKcb5TTw/viewform?usp=header",
+    "https://docs.google.com/forms/d/e/1FAIpQLScEuo6zBsQO2CgoV2__pOlnHB-ZGHdHK0otQyvXGfaJHnIzTw/viewform?embedded=true",
   pretestSheetUrl:
     "https://docs.google.com/spreadsheets/d/1kfPKzZVDBFuWZt55Eg98t0N7MFo5ZUfpfOYEwN6JRtU/edit?gid=0#gid=0",
-  posttestFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSepznUvGXMmZXzktA0oQ-s20SOiWxvkch2BNUX7hZCKcb5TTw/viewform?usp=header",
+  posttestFormUrl: 
+    "https://docs.google.com/forms/d/e/1FAIpQLScEuo6zBsQO2CgoV2__pOlnHB-ZGHdHK0otQyvXGfaJHnIzTw/viewform?embedded=true",
   posttestSheetUrl: "https://docs.google.com/spreadsheets",
 };
