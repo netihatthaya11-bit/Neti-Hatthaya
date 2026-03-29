@@ -190,7 +190,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("ac_course_logs");
         localStorage.removeItem("ac_course_completed");
         router.push("/login");
-    }, [router]);
+    }, [router, user]);
 
     const logVisit = useCallback(
         (path: string) => {

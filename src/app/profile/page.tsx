@@ -81,26 +81,6 @@ export default function ProfilePage() {
                     )}
                 </div>
 
-                {/* Certificate */}
-                <div className="glass-card rounded-2xl p-8 animate-fade-in-up stagger-1 text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg shadow-orange-500/30">
-                        🏆
-                    </div>
-                    <h2 className="text-2xl font-bold text-slate-800 mb-4">
-                        เกียรติบัตรของคุณ
-                    </h2>
-                    <p className="text-slate-600 mb-8 max-w-md mx-auto">
-                        ขอแสดงความยินดี! คุณสามารถดาวน์โหลดเกียรติบัตรเพื่อรับรองการผ่านการอบรมในหลักสูตรนี้ได้ที่นี่
-                    </p>
-                    <Link
-                        href="https://drive.google.com/drive/folders/1pezw57miG3LU817G0_8UrtHJDCzhra5P?usp=sharing"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all font-semibold text-lg"
-                    >
-                        <span>📜</span> กดดูและดาวน์โหลดเกียรติบัตร
-                    </Link>
-                </div>
             </div>
         </div>
     );
