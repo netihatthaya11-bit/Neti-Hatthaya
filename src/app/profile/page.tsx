@@ -5,8 +5,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function ProfilePage() {
-    const { user, logout } = useAuth();
+    const { user, logout, sessions } = useAuth();
     const [mounted, setMounted] = useState(false);
+
+    const formatDateTime = (isoString: string | null) => {
+        if (!isoString) return "ไม่ได้บันทึก";
+        const date = new Date(isoString);
+        return date.toLocaleString('th-TH', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
 
     useEffect(() => {
         setMounted(true);
@@ -43,6 +55,30 @@ export default function ProfilePage() {
                     >
                         ออกจากระบบ
                     </button>
+                </div>
+
+                {/* Session History */}
+                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up stagger-1">
+                    <div className="flex items-center gap-4 mb-6">
+                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
+                            ⏱️
+                        </div>
+                        <h2 className="text-2xl font-bold text-slate-800">ประวัติการเข้าใช้งานล่าสุด</h2>
+                    </div>
+                    {sessions && sessions.length > 1 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-white/60 p-4 rounded-xl border border-slate-100">
+                                <p className="text-sm text-slate-500 mb-1">เวลาเข้าสู่ระบบ (Last Login)</p>
+                                <p className="font-semibold text-slate-800">{formatDateTime(sessions[sessions.length - 2].loginAt)}</p>
+                            </div>
+                            <div className="bg-white/60 p-4 rounded-xl border border-slate-100">
+                                <p className="text-sm text-slate-500 mb-1">เวลาออกจากระบบ (Last Logout)</p>
+                                <p className="font-semibold text-slate-800">{formatDateTime(sessions[sessions.length - 2].logoutAt)}</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="text-slate-600 text-center py-4 bg-white/40 rounded-xl">ยังไม่มีประวัติการเข้าใช้งานก่อนหน้านี้ (นี่คือการเข้าสู่ระบบครั้งแรกของคุณ)</p>
+                    )}
                 </div>
 
                 {/* Certificate */}

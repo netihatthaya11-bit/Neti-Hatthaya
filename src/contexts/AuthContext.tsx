@@ -17,6 +17,11 @@ interface User {
     room: string;
 }
 
+export interface SessionLog {
+    loginAt: string;
+    logoutAt: string | null;
+}
+
 interface VisitLog {
     path: string;
     timestamp: string;
@@ -29,6 +34,7 @@ interface AuthContextType {
     logout: () => void;
     logVisit: (path: string) => void;
     visitLogs: VisitLog[];
+    sessions: SessionLog[];
     completedLessons: number[];
     markLessonComplete: (lessonId: number) => void;
     loading: boolean;
@@ -53,6 +59,7 @@ function saveAllStudents(students: User[]) {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [sessions, setSessions] = useState<SessionLog[]>([]);
     const [visitLogs, setVisitLogs] = useState<VisitLog[]>([]);
     const [completedLessons, setCompletedLessons] = useState<number[]>([]);
     const [loading, setLoading] = useState(true);
@@ -69,8 +76,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // โหลด logs และ completed จาก localStorage
             const storedLogs = localStorage.getItem("ac_course_logs");
             const storedCompleted = localStorage.getItem("ac_course_completed");
+            const storedSessions = localStorage.getItem(`ac_sessions_${parsed.studentId}`);
+            
             if (storedLogs) setVisitLogs(JSON.parse(storedLogs));
             if (storedCompleted) setCompletedLessons(JSON.parse(storedCompleted));
+            if (storedSessions) setSessions(JSON.parse(storedSessions));
         }
         setLoading(false);
     }, []);
@@ -93,6 +103,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
                 setUser(found);
                 localStorage.setItem("ac_course_user", JSON.stringify(found));
+
+                // Add login session
+                const sessionsData = localStorage.getItem(`ac_sessions_${found.studentId}`);
+                let userSessions: SessionLog[] = sessionsData ? JSON.parse(sessionsData) : [];
+                userSessions.push({ loginAt: new Date().toISOString(), logoutAt: null });
+                localStorage.setItem(`ac_sessions_${found.studentId}`, JSON.stringify(userSessions));
+                setSessions(userSessions);
+
                 router.push("/");
                 return { success: true };
             } catch (error) {
@@ -136,6 +154,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(newUser);
                 localStorage.setItem("ac_course_user", JSON.stringify(newUser));
 
+                // Add initial login session
+                let userSessions: SessionLog[] = [];
+                userSessions.push({ loginAt: new Date().toISOString(), logoutAt: null });
+                localStorage.setItem(`ac_sessions_${newUser.studentId}`, JSON.stringify(userSessions));
+                setSessions(userSessions);
+
                 router.push("/");
                 return { success: true };
             } catch (error) {
@@ -147,6 +171,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 
     const logout = useCallback(() => {
+        if (user) {
+            const sessionsData = localStorage.getItem(`ac_sessions_${user.studentId}`);
+            if (sessionsData) {
+                let userSessions: SessionLog[] = JSON.parse(sessionsData);
+                if (userSessions.length > 0) {
+                    userSessions[userSessions.length - 1].logoutAt = new Date().toISOString();
+                    localStorage.setItem(`ac_sessions_${user.studentId}`, JSON.stringify(userSessions));
+                    setSessions(userSessions);
+                }
+            }
+        }
+
         setUser(null);
         setVisitLogs([]);
         setCompletedLessons([]);
@@ -200,6 +236,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 logout,
                 logVisit,
                 visitLogs,
+                sessions,
                 completedLessons,
                 markLessonComplete,
                 loading,
