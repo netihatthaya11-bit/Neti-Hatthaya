@@ -283,56 +283,44 @@ export default function LessonContent({
                         </iframe>
                     </div>
 
-                    <div className="flex justify-center">
-                        <FormButton
-                            label="ทำเสร็จแล้ว กดดูผลคะแนน"
-                            url={getUrl(`lesson_${lesson.id}_sheetUrl`, lesson.sheetUrl)}
-                            icon="sheet"
-                            variant="secondary"
-                        />
-                    </div>
-                </div>
-
-                {/* ปุ่มไปบทถัดไป */}
-                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up text-center">
-                    {isCompleted ? (
-                        <div>
-                            <div className="text-5xl mb-4">🎉</div>
-                            <h2 className="text-xl font-bold text-slate-800 mb-2">
-                                เรียนจบบทที่ {lesson.id} แล้ว!
-                            </h2>
-                            <p className="text-slate-600 text-sm mb-6">
-                                {nextLesson
-                                    ? `กดปุ่มด้านล่างเพื่อปลดล็อกและไปบทที่ ${nextLesson.id}`
-                                    : "กดปุ่มด้านล่างเพื่อไปทำแบบทดสอบหลังเรียน"
-                                }
-                            </p>
-                            <button
-                                onClick={handleGoToNext}
-                                className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg"
-                            >
-                                <span>
+                    <div className="mt-8 pt-8 border-t border-slate-100 flex justify-center text-center pb-4">
+                        {isCompleted ? (
+                            <div className="w-full">
+                                <h2 className="text-xl font-bold text-slate-800 mb-2">
+                                    🎉 ส่งคำตอบแบบฝึกหัดเสร็จแล้วใช่ไหม?
+                                </h2>
+                                <p className="text-slate-600 text-sm mb-6">
                                     {nextLesson
-                                        ? `🔓 ไปบทที่ ${nextLesson.id}`
-                                        : "🔓 ไปแบบทดสอบหลังเรียน"
+                                        ? `กดปุ่มด้านล่างเพื่อไปเรียนบทที่ ${nextLesson.id} ต่อได้เลยครับ`
+                                        : "ยอดเยี่ยมมาก! กดปุ่มด้านล่างเพื่อไปทำแบบทดสอบหลังเรียน"
                                     }
-                                </span>
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
-                            </button>
-                        </div>
-                    ) : (
-                        <div>
-                            <div className="text-5xl mb-4">🔒</div>
-                            <h2 className="text-xl font-bold text-slate-800 mb-2">
-                                กำลังเรียนบทที่ {lesson.id}
-                            </h2>
-                            <p className="text-slate-600 text-sm">
-                                กรุณาศึกษาเนื้อหาให้ครบ เหลือเวลา <span className="font-bold text-amber-600">{formatTime(timeLeft)}</span> นาที
-                            </p>
-                        </div>
-                    )}
+                                </p>
+                                <button
+                                    onClick={handleGoToNext}
+                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg"
+                                >
+                                    <span>
+                                        {nextLesson
+                                            ? `🔓 ไปบทที่ ${nextLesson.id}`
+                                            : "🔓 ไปแบบทดสอบหลังเรียน"
+                                        }
+                                    </span>
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="w-full">
+                                <h2 className="text-xl font-bold text-slate-800 mb-2">
+                                    🔒 ศึกษาเนื้อหาเพื่อปลดล็อก
+                                </h2>
+                                <p className="text-slate-600 text-sm">
+                                    กรุณาศึกษาเนื้อหาให้ครบ เหลือเวลา <span className="font-bold text-red-500">{formatTime(timeLeft)}</span> นาที
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Navigation */}
