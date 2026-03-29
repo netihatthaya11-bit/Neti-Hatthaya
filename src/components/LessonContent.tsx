@@ -269,26 +269,31 @@ export default function LessonContent({
                         </div>
                     )}
 
-                    <div className="mb-8 pb-8 border-b border-slate-100 flex justify-center text-center">
+                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
+                        <iframe 
+                            src={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl).replace(/viewform.*$/, "viewform?embedded=true")}
+                            width="100%" 
+                            height="1000" 
+                            frameBorder="0" 
+                            marginHeight={0} 
+                            marginWidth={0}
+                            className="w-full max-w-3xl min-h-[60vh] md:min-h-[800px]"
+                        >
+                            กำลังโหลด…
+                        </iframe>
+                    </div>
+
+                    <div className="mt-4 flex justify-center text-center">
                         {isCompleted ? (
                             <div className="w-full">
-                                <h2 className="text-xl font-bold text-slate-800 mb-2">
-                                    🎉 ปลดล็อกแล้ว! (ทำแบบฝึกหัดด้านล่างเสร็จก่อนค่อยกดไปต่อนะครับ)
-                                </h2>
-                                <p className="text-slate-600 text-sm mb-6">
-                                    {nextLesson
-                                        ? `กดปุ่มด้านล่างเพื่อไปเรียนบทที่ ${nextLesson.id} ต่อได้เลยครับ`
-                                        : "ยอดเยี่ยมมาก! กดปุ่มด้านล่างเพื่อไปทำแบบทดสอบหลังเรียน"
-                                    }
-                                </p>
                                 <button
                                     onClick={handleGoToNext}
-                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg"
+                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg border border-teal-400"
                                 >
                                     <span>
                                         {nextLesson
-                                            ? `🔓 ไปบทที่ ${nextLesson.id}`
-                                            : "🔓 ไปแบบทดสอบหลังเรียน"
+                                            ? `✅ ส่งคำตอบแล้ว? กดไปบทที่ ${nextLesson.id}`
+                                            : "✅ ส่งคำตอบแล้ว? กดไปแบบทดสอบหลังเรียน"
                                         }
                                     </span>
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -306,20 +311,6 @@ export default function LessonContent({
                                 </p>
                             </div>
                         )}
-                    </div>
-
-                    <div className="w-full flex justify-center bg-white rounded-xl overflow-hidden shadow-inner mb-6">
-                        <iframe 
-                            src={getUrl(`lesson_${lesson.id}_formUrl`, lesson.formUrl).replace(/viewform.*$/, "viewform?embedded=true")}
-                            width="100%" 
-                            height="2000" 
-                            frameBorder="0" 
-                            marginHeight={0} 
-                            marginWidth={0}
-                            className="w-full max-w-3xl min-h-[80vh]"
-                        >
-                            กำลังโหลด…
-                        </iframe>
                     </div>
                 </div>
 
