@@ -88,7 +88,7 @@ export const lessons: Lesson[] = [
     description: "เรียนรู้หลักการพื้นฐาน เน้นการเปลี่ยนสถานะของสารทำความเย็นในวงจรทำความเย็น",
     icon: "❄️",
     color: "from-sky-400 to-blue-600",
-    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeGOp6xmIi-yXHkSmnd-rf6zqHfem7rECW-3tEIfyF7k8hoCg/viewform?usp=header",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdvy2ke42M1Jg8gdQt6WOUDHS208Vfs937U9FiO082x_UrUeA/viewform?embedded=true",
     sheetUrl: "https://docs.google.com/spreadsheets",
     uploadUrl: "https://forms.google.com",
     videoUrl: "https://youtu.be/OkliQITDd8E",
