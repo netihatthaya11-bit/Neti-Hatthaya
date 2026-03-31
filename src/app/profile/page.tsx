@@ -3,10 +3,15 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { lessons } from "@/data/lessonsData";
 
 export default function ProfilePage() {
-    const { user, logout, sessions } = useAuth();
+    const { user, logout, sessions, completedLessons } = useAuth();
     const [mounted, setMounted] = useState(false);
+
+    const completedCount = completedLessons ? completedLessons.length : 0;
+    const totalLessons = lessons.length;
+    const progressPercent = Math.round((completedCount / totalLessons) * 100);
 
     const formatDateTime = (isoString: string | null) => {
         if (!isoString) return "ไม่ได้บันทึก";
@@ -55,6 +60,90 @@ export default function ProfilePage() {
                     >
                         ออกจากระบบ
                     </button>
+                </div>
+
+                {/* Badges & Achievements */}
+                <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up stagger-1">
+                    <div className="flex items-center gap-4 mb-6">
+                        <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-2xl">
+                            🏆
+                        </div>
+                        <h2 className="text-2xl font-bold text-slate-800">เหรียญตรา & ความสำเร็จ</h2>
+                    </div>
+
+                    {/* Progress Overview */}
+                    <div className="bg-white/60 rounded-2xl p-6 mb-6 border border-slate-100">
+                        <div className="flex justify-between items-center mb-3">
+                            <span className="text-slate-600 font-medium">ความคืบหน้าการเรียน</span>
+                            <span className="text-lg font-bold text-primary">{completedCount}/{totalLessons} บทเรียน</span>
+                        </div>
+                        <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                            <div 
+                                className="bg-gradient-to-r from-primary to-secondary h-3 rounded-full transition-all duration-1000 ease-out"
+                                style={{ width: `${progressPercent}%` }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Badges Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {/* Bronze */}
+                        <div className={`relative rounded-2xl p-6 text-center border-2 transition-all duration-500 ${
+                            completedCount >= 1 
+                                ? "bg-gradient-to-b from-amber-50 to-orange-50 border-amber-300 shadow-lg shadow-amber-100" 
+                                : "bg-slate-50 border-slate-200 opacity-50 grayscale"
+                        }`}>
+                            {completedCount >= 1 && (
+                                <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                            )}
+                            <div className={`text-5xl mb-3 ${completedCount >= 1 ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥉</div>
+                            <h3 className="text-lg font-bold text-slate-800 mb-1">ผู้เริ่มต้น</h3>
+                            <p className="text-xs text-slate-500 mb-3">เริ่มเรียนบทแรกสำเร็จ</p>
+                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                                completedCount >= 1 ? "bg-amber-200 text-amber-800" : "bg-slate-200 text-slate-500"
+                            }`}>
+                                {completedCount >= 1 ? "ปลดล็อกแล้ว!" : "เรียน 1 บท"}
+                            </span>
+                        </div>
+
+                        {/* Silver */}
+                        <div className={`relative rounded-2xl p-6 text-center border-2 transition-all duration-500 ${
+                            completedCount >= 2 
+                                ? "bg-gradient-to-b from-gray-50 to-slate-100 border-slate-400 shadow-lg shadow-slate-200" 
+                                : "bg-slate-50 border-slate-200 opacity-50 grayscale"
+                        }`}>
+                            {completedCount >= 2 && (
+                                <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                            )}
+                            <div className={`text-5xl mb-3 ${completedCount >= 2 ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥈</div>
+                            <h3 className="text-lg font-bold text-slate-800 mb-1">ช่างฝึกหัด</h3>
+                            <p className="text-xs text-slate-500 mb-3">เรียนจบครึ่งหนึ่ง (50%)</p>
+                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                                completedCount >= 2 ? "bg-slate-300 text-slate-700" : "bg-slate-200 text-slate-500"
+                            }`}>
+                                {completedCount >= 2 ? "ปลดล็อกแล้ว!" : `เรียนอีก ${2 - completedCount} บท`}
+                            </span>
+                        </div>
+
+                        {/* Gold */}
+                        <div className={`relative rounded-2xl p-6 text-center border-2 transition-all duration-500 ${
+                            completedCount >= totalLessons
+                                ? "bg-gradient-to-b from-yellow-50 to-amber-100 border-yellow-400 shadow-lg shadow-yellow-100" 
+                                : "bg-slate-50 border-slate-200 opacity-50 grayscale"
+                        }`}>
+                            {completedCount >= totalLessons && (
+                                <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                            )}
+                            <div className={`text-5xl mb-3 ${completedCount >= totalLessons ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥇</div>
+                            <h3 className="text-lg font-bold text-slate-800 mb-1">ช่างแอร์มือโปร</h3>
+                            <p className="text-xs text-slate-500 mb-3">เรียนจบครบทุกบท (100%)</p>
+                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                                completedCount >= totalLessons ? "bg-yellow-300 text-yellow-800" : "bg-slate-200 text-slate-500"
+                            }`}>
+                                {completedCount >= totalLessons ? "🌟 ช่างแอร์มือโปร!" : `เรียนอีก ${totalLessons - completedCount} บท`}
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Session History */}

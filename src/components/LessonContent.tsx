@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import FormButton from "@/components/FormButton";
+import ConfettiEffect from "@/components/ConfettiEffect";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLinkSettings } from "@/contexts/LinkSettingsContext";
 import { Lesson } from "@/data/lessonsData";
@@ -25,6 +26,7 @@ export default function LessonContent({
     const router = useRouter();
     const [timeLeft, setTimeLeft] = useState(lesson.minDuration);
     const [isCompleted, setIsCompleted] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     // Initial Check & Logging
@@ -48,6 +50,7 @@ export default function LessonContent({
                 if (prev <= 1) {
                     clearInterval(timerRef.current!);
                     setIsCompleted(true);
+                    setShowConfetti(true);
                     return 0;
                 }
                 return prev - 1;
@@ -78,6 +81,12 @@ export default function LessonContent({
 
     return (
         <div className="gradient-cool min-h-screen py-12">
+            {/* Confetti Effect */}
+            <ConfettiEffect 
+                show={showConfetti} 
+                message="🎉 ปลดล็อกสำเร็จ!" 
+                subMessage={`คุณสามารถทำแบบฝึกหัดบทที่ ${lesson.id} ได้แล้ว!`}
+            />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-8 animate-fade-in-up">
