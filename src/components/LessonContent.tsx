@@ -90,7 +90,9 @@ export default function LessonContent({
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-8 animate-fade-in-up">
-                    <span className="text-6xl block mb-4">{lesson.icon}</span>
+                    <span className="text-6xl sm:text-[80px] leading-tight block mb-4 sm:mb-6 animate-float-rotate">
+                        {lesson.icon}
+                    </span>
                     <div className="inline-block mb-3">
                         <span
                             className={`bg-gradient-to-r ${lesson.color} text-white text-sm font-bold px-4 py-1.5 rounded-full`}
