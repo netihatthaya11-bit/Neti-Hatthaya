@@ -262,10 +262,20 @@ export default function LessonContent({
 
                     {/* Lock Overlay */}
                     {!isCompleted && (
-                        <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center rounded-xl border border-slate-200 text-center p-4">
-                            <span className="text-3xl mb-2">🔒</span>
-                            <p className="text-slate-800 font-bold">เนื้อหาถูกล็อก</p>
-                            <p className="text-slate-600 text-xs">กรุณาดูวิดีโอหรือศึกษาเนื้อหาให้ครบ {formatTime(timeLeft)} นาที</p>
+                        <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md z-20 flex flex-col items-center justify-center rounded-xl p-4 transition-all duration-500 group">
+                            <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full border-b-8 border-amber-400 text-center transform group-hover:scale-105 transition-transform duration-300 relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-amber-400 animate-pulse"></div>
+                                <span className="text-6xl mb-4 block animate-bounce" style={{ animationDuration: '2s' }}>⏳</span>
+                                <h3 className="text-xl font-bold text-slate-800 mb-3">
+                                    ยังไม่สามารถทำแบบฝึกหัดได้
+                                </h3>
+                                <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                                    คุณต้องศึกษาเนื้อหาและดูวิดีโอให้ครบตามเวลาที่กำหนด เพื่อปลดล็อกแบบฝึกหัดนี้
+                                </p>
+                                <div className="bg-amber-50 text-amber-700 py-3 px-6 rounded-xl font-mono text-2xl font-bold border border-amber-200 inline-block shadow-inner animate-pulse">
+                                    {formatTime(timeLeft)}
+                                </div>
+                            </div>
                         </div>
                     )}
 
