@@ -46,7 +46,7 @@ export default function Home() {
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <div className="animate-fade-in-up">
-              <span className="text-6xl sm:text-7xl block mb-6 animate-float">
+              <span className="text-6xl sm:text-7xl block mb-6 animate-float-rotate">
                 ❄️
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
@@ -187,8 +187,8 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group border border-slate-100">
-              <div className="w-20 h-20 mx-auto bg-blue-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-3 transition-all duration-400 hover:shadow-2xl group border border-slate-100 hover-glow">
+              <div className="w-20 h-20 mx-auto bg-blue-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner animate-float" style={{ animationDelay: '0s' }}>
                 🧠
               </div>
               <h3 className="text-xl font-bold text-slate-800 mb-3">เข้าใจหลักการพื้นฐาน</h3>
@@ -197,8 +197,8 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group border border-slate-100">
-              <div className="w-20 h-20 mx-auto bg-emerald-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-3 transition-all duration-400 hover:shadow-2xl group border border-slate-100 hover-glow">
+              <div className="w-20 h-20 mx-auto bg-emerald-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner animate-float" style={{ animationDelay: '0.5s' }}>
                 🛠️
               </div>
               <h3 className="text-xl font-bold text-slate-800 mb-3">ทักษะการบำรุงรักษา</h3>
@@ -207,8 +207,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group border border-slate-100">
-              <div className="w-20 h-20 mx-auto bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+            <div className="glass-card p-8 rounded-3xl text-center transform hover:-translate-y-3 transition-all duration-400 hover:shadow-2xl group border border-slate-100 hover-glow">
+              <div className="w-20 h-20 mx-auto bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner animate-float" style={{ animationDelay: '1s' }}>
                 💡
               </div>
               <h3 className="text-xl font-bold text-slate-800 mb-3">นำไปใช้ได้จริง</h3>
@@ -255,8 +255,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Pre-Test Card */}
             <Link href="/pretest">
-              <div className="glass-card rounded-2xl p-8 text-center animate-fade-in-up stagger-1 group">
-                <div className="text-5xl mb-4">📋</div>
+              <div className="glass-card rounded-2xl p-8 text-center animate-fade-in-up stagger-1 group hover-glow animate-glow-border">
+                <div className="text-5xl mb-4 animate-float" style={{ animationDelay: '0s' }}>📋</div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">
                   แบบทดสอบก่อนเรียน
                 </h3>
@@ -271,8 +271,8 @@ export default function Home() {
 
             {/* Post-Test Card */}
             <Link href="/posttest">
-              <div className="glass-card rounded-2xl p-8 text-center animate-fade-in-up stagger-2 group">
-                <div className="text-5xl mb-4">🏆</div>
+              <div className="glass-card rounded-2xl p-8 text-center animate-fade-in-up stagger-2 group hover-glow animate-glow-border">
+                <div className="text-5xl mb-4 animate-float" style={{ animationDelay: '0.5s' }}>🏆</div>
                 <h3 className="text-xl font-bold text-slate-800 mb-2">
                   แบบทดสอบหลังเรียน
                 </h3>
