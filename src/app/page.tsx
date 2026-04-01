@@ -175,7 +175,7 @@ export default function Home() {
       </section>
 
       {/* Course Highlights Section */}
-      <section className="py-16 bg-gradient-to-b from-[#f0f9ff] to-white relative z-10">
+      <section className="py-16 gradient-fade relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">

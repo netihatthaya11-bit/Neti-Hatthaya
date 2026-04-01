@@ -239,6 +239,18 @@ body {
   background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
 }
 
+.dark .gradient-cool {
+  background: linear-gradient(135deg, #0c1929 0%, #0f172a 50%, #1e293b 100%);
+}
+
+.gradient-fade {
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+}
+
+.dark .gradient-fade {
+  background: linear-gradient(180deg, #0c1929 0%, #0f172a 100%);
+}
+
 .gradient-text {
   background: linear-gradient(135deg, #0ea5e9, #06b6d4, #8b5cf6);
   -webkit-background-clip: text;
