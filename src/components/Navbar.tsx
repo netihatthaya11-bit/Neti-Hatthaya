@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePathname } from "next/navigation";
 
@@ -78,6 +79,8 @@ export default function Navbar() {
 
                     {/* User Profile & Mobile Menu Button */}
                     <div className="flex items-center gap-3">
+                        <ThemeToggle />
+
                         {user && (
                             <Link
                                 href="/profile"

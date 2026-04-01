@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import FormButton from "@/components/FormButton";
 import ConfettiEffect from "@/components/ConfettiEffect";
+import { playSuccessSound } from "@/utils/soundEffects";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLinkSettings } from "@/contexts/LinkSettingsContext";
 import { Lesson } from "@/data/lessonsData";
@@ -51,6 +52,7 @@ export default function LessonContent({
                     clearInterval(timerRef.current!);
                     setIsCompleted(true);
                     setShowConfetti(true);
+                    playSuccessSound(); // Play the success ding!
                     return 0;
                 }
                 return prev - 1;

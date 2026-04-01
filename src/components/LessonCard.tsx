@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { Lesson } from "@/data/lessonsData";
 import { useAuth } from "@/contexts/AuthContext";
+import { playErrorSound } from "@/utils/soundEffects";
+import { useState } from "react";
 
 interface LessonCardProps {
     lesson: Lesson;
@@ -11,16 +13,24 @@ interface LessonCardProps {
 
 export default function LessonCard({ lesson, index }: LessonCardProps) {
     const { completedLessons } = useAuth();
+    const [shake, setShake] = useState(false);
 
     // บทที่ 1 ปลดล็อกเสมอ, บทอื่นต้องจบบทก่อนหน้า
     const isUnlocked = lesson.id === 1 || completedLessons.includes(lesson.id - 1);
     const isCompleted = completedLessons.includes(lesson.id);
 
     if (!isUnlocked) {
-        // ล็อก — กดไม่ได้
+        // ล็อก — กดไม่ได้ แต่มี Effect สั่นและเสียงแจ้งเตือน
+        const handleLockedClick = () => {
+            playErrorSound();
+            setShake(true);
+            setTimeout(() => setShake(false), 500); // หยุดสั่นหลังจาก 0.5 วิ
+        };
+
         return (
             <div
-                className={`glass-card rounded-2xl p-6 animate-fade-in-up stagger-${index + 1} opacity-50 cursor-not-allowed relative`}
+                onClick={handleLockedClick}
+                className={`glass-card rounded-2xl p-6 animate-fade-in-up stagger-${index + 1} opacity-50 cursor-pointer relative ${shake ? "animate-wiggle shadow-red-500/20 shadow-xl border-red-400" : ""}`}
             >
                 {/* Lock Overlay */}
                 <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px] z-10 flex items-center justify-center rounded-2xl">
