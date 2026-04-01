@@ -182,28 +182,24 @@ export default function LessonContent({
                 </div>
 
                 <div className="glass-card rounded-2xl p-8 mb-8 animate-fade-in-up stagger-1">
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
-                        <div className="flex-1">
-                            <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                                <span>📌</span> ภาพรวม
-                            </h2>
-                            <p className="text-slate-600 leading-relaxed">
-                                {lesson.content.overview}
-                            </p>
-                        </div>
-                        {lesson.content.overviewImageUrl && (
-                            <div className="shrink-0">
-                                <div className="w-[180px] h-[180px] rounded-lg overflow-hidden border border-slate-200 shadow-sm">
-                                    <img
-                                        src={lesson.content.overviewImageUrl}
-                                        alt="Overview diagram"
-                                        className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                                        onClick={() => window.open(lesson.content.overviewImageUrl, '_blank')}
-                                    />
-                                </div>
+                    <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span>📌</span> ภาพรวม
+                    </h2>
+                    <p className="text-slate-600 leading-relaxed mb-6">
+                        {lesson.content.overview}
+                    </p>
+                    {lesson.content.overviewImageUrl && (
+                        <div className="flex justify-center w-full">
+                            <div className="rounded-xl overflow-hidden shadow-md bg-white border border-slate-100 flex items-center justify-center p-4 max-w-[400px]">
+                                <img
+                                    src={lesson.content.overviewImageUrl}
+                                    alt="Overview diagram"
+                                    className="w-full h-auto object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+                                    onClick={() => window.open(lesson.content.overviewImageUrl, '_blank')}
+                                />
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Topics */}
