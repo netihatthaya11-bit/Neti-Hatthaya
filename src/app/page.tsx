@@ -263,9 +263,11 @@ export default function Home() {
                 <p className="text-sm text-slate-600 mb-4">
                   ทดสอบความรู้พื้นฐานก่อนเข้าสู่บทเรียน
                 </p>
-                <span className="inline-flex items-center gap-1 text-primary font-medium text-sm group-hover:gap-2 transition-all">
-                  เริ่มทำแบบทดสอบ →
-                </span>
+                <div className="mt-4 flex justify-center w-full">
+                  <span className="inline-flex items-center gap-2 bg-primary text-white font-bold px-6 py-3 rounded-full hover:bg-primary/90 transform group-hover:scale-105 transition-all duration-300 shadow-md">
+                    เริ่มทำแบบทดสอบ →
+                  </span>
+                </div>
               </div>
             </Link>
 
@@ -279,9 +281,11 @@ export default function Home() {
                 <p className="text-sm text-slate-600 mb-4">
                   ทดสอบความรู้หลังจากเรียนจบทุกบท
                 </p>
-                <span className="inline-flex items-center gap-1 text-primary font-medium text-sm group-hover:gap-2 transition-all">
-                  เริ่มทำแบบทดสอบ →
-                </span>
+                <div className="mt-4 flex justify-center w-full">
+                  <span className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-6 py-3 rounded-full hover:shadow-lg transform group-hover:scale-105 transition-all duration-300 shadow-md border border-teal-500/50">
+                    เริ่มทำแบบทดสอบ →
+                  </span>
+                </div>
               </div>
             </Link>
           </div>
