@@ -62,22 +62,78 @@ export default function Home() {
 
             {/* Progress Bar or CTA Buttons */}
             {mounted && user ? (
-              <div className="max-w-xl mx-auto mt-8 animate-fade-in-up stagger-2 bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-xl hover-glow">
-                <div className="flex justify-between items-end mb-3">
-                  <div className="text-left">
+              <div className="max-w-3xl mx-auto mt-8 animate-fade-in-up stagger-2 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/20 shadow-xl">
+                <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-6 gap-4">
+                  <div className="text-center sm:text-left">
                     <p className="text-white/80 text-sm font-medium mb-1">ยินดีต้อนรับกลับมา, {user.name}</p>
-                    <h3 className="text-xl font-bold text-white">ความคืบหน้าการเรียน</h3>
+                    <h3 className="text-2xl font-bold text-white">เหรียญตราและความสำเร็จ 🏆</h3>
                   </div>
-                  <span className="text-3xl font-bold text-teal-300">{progressPercentage}%</span>
-                </div>
-                <div className="w-full bg-white/20 rounded-full h-4 mb-6 shadow-inner overflow-hidden border border-white/10">
-                  <div 
-                    className="bg-gradient-to-r from-teal-400 to-emerald-400 h-4 rounded-full transition-all duration-1000 ease-out relative"
-                    style={{ width: `${progressPercentage}%` }}
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                  <div className="text-right flex items-center gap-3 bg-white/10 px-4 py-2 rounded-2xl border border-white/10">
+                    <div className="text-sm text-white/80">ความคืบหน้า</div>
+                    <div className="text-2xl font-bold text-teal-300">{progressPercentage}%</div>
                   </div>
                 </div>
+
+                {/* Badges Grid (Glassmorphism Dark) */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                  {/* Bronze */}
+                  <div className={`relative rounded-2xl p-5 text-center border transition-all duration-500 ${
+                      completedCount >= 1 
+                          ? "bg-gradient-to-b from-amber-500/20 to-orange-500/20 border-amber-300/50 shadow-lg shadow-amber-500/10" 
+                          : "bg-white/5 border-white/10 opacity-60 grayscale"
+                  }`}>
+                      {completedCount >= 1 && (
+                          <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                      )}
+                      <div className={`text-4xl mb-2 ${completedCount >= 1 ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥉</div>
+                      <h3 className="text-base font-bold text-white mb-1">ผู้เริ่มต้น</h3>
+                      <p className="text-xs text-white/70 mb-3">เริ่มเรียนบทแรกสำเร็จ</p>
+                      <span className={`text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-full ${
+                          completedCount >= 1 ? "bg-amber-400/20 text-amber-200" : "bg-white/10 text-white/50"
+                      }`}>
+                          {completedCount >= 1 ? "ปลดล็อกแล้ว!" : "เรียน 1 บท"}
+                      </span>
+                  </div>
+
+                  {/* Silver */}
+                  <div className={`relative rounded-2xl p-5 text-center border transition-all duration-500 ${
+                      completedCount >= 2 
+                          ? "bg-gradient-to-b from-slate-300/20 to-slate-100/20 border-slate-300/50 shadow-lg shadow-slate-300/10" 
+                          : "bg-white/5 border-white/10 opacity-60 grayscale"
+                  }`}>
+                      {completedCount >= 2 && (
+                          <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                      )}
+                      <div className={`text-4xl mb-2 ${completedCount >= 2 ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥈</div>
+                      <h3 className="text-base font-bold text-white mb-1">ช่างฝึกหัด</h3>
+                      <p className="text-xs text-white/70 mb-3">เรียนจบครึ่งหนึ่ง (50%)</p>
+                      <span className={`text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-full ${
+                          completedCount >= 2 ? "bg-slate-300/30 text-white" : "bg-white/10 text-white/50"
+                      }`}>
+                          {completedCount >= 2 ? "ปลดล็อกแล้ว!" : `เรียนอีก ${2 - completedCount} บท`}
+                      </span>
+                  </div>
+
+                  {/* Gold */}
+                  <div className={`relative rounded-2xl p-5 text-center border transition-all duration-500 ${
+                      completedCount >= totalLessons
+                          ? "bg-gradient-to-b from-yellow-300/20 to-amber-300/20 border-yellow-300/50 shadow-lg shadow-yellow-300/10" 
+                          : "bg-white/5 border-white/10 opacity-60 grayscale"
+                  }`}>
+                      {completedCount >= totalLessons && (
+                          <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">✓</div>
+                      )}
+                      <div className={`text-4xl mb-2 ${completedCount >= totalLessons ? "animate-bounce" : ""}`} style={{ animationDuration: '3s' }}>🥇</div>
+                      <h3 className="text-base font-bold text-white mb-1">ช่างแอร์มือโปร</h3>
+                      <p className="text-xs text-white/70 mb-3">เรียนจบครบ (100%)</p>
+                      <span className={`text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-full ${
+                          completedCount >= totalLessons ? "bg-yellow-300/30 text-yellow-200" : "bg-white/10 text-white/50"
+                      }`}>
+                          {completedCount >= totalLessons ? "🌟 ช่างแอร์มือโปร!" : `เรียนอีก ${totalLessons - completedCount} บท`}
+                      </span>
+                  </div>
+                </div>
+
                 <Link
                   href={progressPercentage === 100 ? "/posttest" : `/lessons/${Math.min(completedCount + 1, totalLessons)}`}
                   className="inline-flex items-center justify-center w-full gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-white/90 transform hover:scale-105 transition-all duration-300 shadow-lg"
@@ -231,82 +287,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Badges Section (Bottom) */}
-      {mounted && user && (
-        <section className="py-16 sm:py-24 bg-white/40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-3xl sm:text-4xl font-bold gradient-text mb-4">
-                🏆 เหรียญตราและความสำเร็จ
-              </h2>
-              <p className="text-slate-600 max-w-xl mx-auto text-lg">
-                สะสมเหรียญตราจากการเรียนให้ครบทุกบทเพื่อพิสูจน์ความเชี่ยวชาญของคุณ
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {/* Bronze */}
-              <div className={`relative glass-card rounded-3xl p-8 text-center border-2 transition-all duration-500 ${
-                  completedCount >= 1 
-                      ? "bg-gradient-to-b from-amber-50 to-orange-50 border-amber-300 shadow-xl shadow-amber-100/50 hover:-translate-y-2 hover-glow" 
-                      : "bg-slate-50/50 border-slate-200 opacity-60 grayscale"
-              }`}>
-                  {completedCount >= 1 && (
-                      <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg border-2 border-white animate-scale-in">✓ ปลดล็อกแล้ว</div>
-                  )}
-                  <div className={`text-7xl mb-6 ${completedCount >= 1 ? "animate-bounce animate-float" : ""}`} style={{ animationDuration: '3s' }}>🥉</div>
-                  <h3 className="text-2xl font-bold text-slate-800 mb-2">ผู้เริ่มต้น</h3>
-                  <p className="text-slate-500 mb-6">เริ่มเรียนบทแรกสำเร็จ</p>
-                  <span className={`text-sm font-bold px-5 py-2.5 rounded-full inline-block ${
-                      completedCount >= 1 ? "bg-amber-200 text-amber-800" : "bg-slate-200 text-slate-500"
-                  }`}>
-                      {completedCount >= 1 ? "🎉 พิชิตสำเร็จ!" : "เงื่อนไข: เรียน 1 บท"}
-                  </span>
-              </div>
-
-              {/* Silver */}
-              <div className={`relative glass-card rounded-3xl p-8 text-center border-2 transition-all duration-500 ${
-                  completedCount >= 2 
-                      ? "bg-gradient-to-b from-gray-50 to-slate-100 border-slate-400 shadow-xl shadow-slate-200/50 hover:-translate-y-2 hover-glow" 
-                      : "bg-slate-50/50 border-slate-200 opacity-60 grayscale"
-              }`}>
-                  {completedCount >= 2 && (
-                      <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg border-2 border-white animate-scale-in">✓ ปลดล็อกแล้ว</div>
-                  )}
-                  <div className={`text-7xl mb-6 ${completedCount >= 2 ? "animate-bounce animate-float" : ""}`} style={{ animationDuration: '3s' }}>🥈</div>
-                  <h3 className="text-2xl font-bold text-slate-800 mb-2">ช่างฝึกหัด</h3>
-                  <p className="text-slate-500 mb-6">เรียนจบครึ่งหนึ่ง (50%)</p>
-                  <span className={`text-sm font-bold px-5 py-2.5 rounded-full inline-block ${
-                      completedCount >= 2 ? "bg-slate-300 text-slate-800" : "bg-slate-200 text-slate-500"
-                  }`}>
-                      {completedCount >= 2 ? "🎉 พิชิตสำเร็จ!" : `เงื่อนไข: เรียนอีก ${2 - completedCount} บท`}
-                  </span>
-              </div>
-
-              {/* Gold */}
-              <div className={`relative glass-card rounded-3xl p-8 text-center border-2 transition-all duration-500 ${
-                  completedCount >= totalLessons
-                      ? "bg-gradient-to-b from-yellow-50 to-amber-100 border-yellow-400 shadow-xl shadow-yellow-100/50 hover:-translate-y-2 hover-glow animate-glow-border" 
-                      : "bg-slate-50/50 border-slate-200 opacity-60 grayscale"
-              }`}>
-                  {completedCount >= totalLessons && (
-                      <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg border-2 border-white animate-scale-in">✓ ปลดล็อกแล้ว</div>
-                  )}
-                  <div className={`text-7xl mb-6 ${completedCount >= totalLessons ? "animate-bounce animate-float" : ""}`} style={{ animationDuration: '3s' }}>🥇</div>
-                  <h3 className="text-2xl font-bold text-slate-800 mb-2">ช่างแอร์มือโปร</h3>
-                  <p className="text-slate-500 mb-6">เรียนจบครบทุกบท (100%)</p>
-                  <span className={`text-sm font-bold px-5 py-2.5 rounded-full inline-block ${
-                      completedCount >= totalLessons ? "bg-yellow-300 text-yellow-900 shadow-sm" : "bg-slate-200 text-slate-500"
-                  }`}>
-                      {completedCount >= totalLessons ? "🌟 ยอดเยี่ยมมาก!" : `เงื่อนไข: เรียนอีก ${totalLessons - completedCount} บท`}
-                  </span>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
     </div>
   );
 }
