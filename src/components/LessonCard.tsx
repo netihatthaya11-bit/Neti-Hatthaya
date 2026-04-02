@@ -66,23 +66,23 @@ export default function LessonCard({ lesson, index }: LessonCardProps) {
             <div
                 className={`glass-card rounded-2xl p-6 cursor-pointer animate-fade-in-up stagger-${index + 1} relative`}
             >
-                {/* Completed Badge */}
-                {isCompleted && (
-                    <div className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 z-10">
-                        ✓ เรียนจบแล้ว
-                    </div>
-                )}
-
                 {/* Icon & Badge */}
                 <div className="flex items-start justify-between mb-4">
                     <span className="text-4xl animate-float" style={{ animationDelay: `${index * 0.5}s` }}>
                         {lesson.icon}
                     </span>
-                    <span
-                        className={`bg-gradient-to-r ${lesson.color} text-white text-xs font-bold px-3 py-1 rounded-full`}
-                    >
-                        บทที่ {lesson.id}
-                    </span>
+                    <div className="flex flex-col items-end gap-2">
+                        <span
+                            className={`bg-gradient-to-r ${lesson.color} text-white text-xs font-bold px-3 py-1 rounded-full`}
+                        >
+                            บทที่ {lesson.id}
+                        </span>
+                        {isCompleted && (
+                            <div className="bg-emerald-500/10 border border-emerald-500 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                                ✓ เรียนจบแล้ว
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Title */}
