@@ -28,6 +28,8 @@ export default function LessonContent({
     const [timeLeft, setTimeLeft] = useState(lesson.minDuration);
     const [isCompleted, setIsCompleted] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [isFocused, setIsFocused] = useState(true);
+    const [showFocusWarning, setShowFocusWarning] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     // Initial Check & Logging
@@ -44,7 +46,7 @@ export default function LessonContent({
 
     // Timer Logic
     useEffect(() => {
-        if (isCompleted) return;
+        if (isCompleted || !isFocused) return;
 
         timerRef.current = setInterval(() => {
             setTimeLeft((prev) => {
@@ -62,7 +64,37 @@ export default function LessonContent({
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isCompleted, lesson.id]);
+    }, [isCompleted, isFocused, lesson.id]);
+
+    // Focus Mode Logic (Anti-Cheat)
+    useEffect(() => {
+        if (isCompleted) return;
+
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                setIsFocused(false);
+                setShowFocusWarning(true);
+            }
+        };
+
+        const handleBlur = () => {
+            setIsFocused(false);
+            setShowFocusWarning(true);
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("blur", handleBlur);
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            window.removeEventListener("blur", handleBlur);
+        };
+    }, [isCompleted]);
+
+    const handleResumeFocus = () => {
+        setShowFocusWarning(false);
+        setIsFocused(true);
+    };
 
     // Handle "ไปบทถัดไป" button click
     const handleGoToNext = () => {
@@ -89,6 +121,36 @@ export default function LessonContent({
                 message="🎉 ปลดล็อกสำเร็จ!" 
                 subMessage={`คุณสามารถทำแบบฝึกหัดบทที่ ${lesson.id} ได้แล้ว!`}
             />
+
+            {/* Focus Mode Warning Overlay */}
+            {showFocusWarning && !isCompleted && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in-up">
+                    <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-rose-500/30 text-center relative overflow-hidden transform animate-scale-in">
+                        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-rose-500/20 blur-2xl"></div>
+                        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 rounded-full bg-orange-500/20 blur-2xl"></div>
+
+                        <div className="relative z-10">
+                            <div className="w-20 h-20 mx-auto bg-rose-100 rounded-full flex items-center justify-center text-4xl mb-6 shadow-lg shadow-rose-500/20 animate-wiggle">
+                                🛑
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-800 mb-2">
+                                ระบบหยุดเวลาชั่วคราว
+                            </h3>
+                            <p className="text-slate-600 mb-6 leading-relaxed">
+                                ตรวจพบการพับหน้าจอหรือสลับแอปพลิเคชันอื่น กรุณาเปิดหน้าจอนี้ค้างไว้เพื่อเรียนต่อให้จบและปลดล็อกแบบฝึกหัด
+                            </p>
+                            
+                            <button
+                                onClick={handleResumeFocus}
+                                className="inline-flex items-center justify-center w-full gap-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white font-bold px-6 py-4 rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-lg shadow-rose-500/25"
+                            >
+                                🎯 ฉันกลับมาเรียนต่อแล้ว
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-8 animate-fade-in-up">
