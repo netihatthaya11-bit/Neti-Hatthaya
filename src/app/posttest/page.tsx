@@ -145,8 +145,8 @@ export default function PosttestPage() {
 
                 {/* Modal Overlay */}
                 {isModalOpen && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in-up">
-                        <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/20 text-center relative overflow-hidden transform animate-scale-in">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in-up">
+                        <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/20 text-center relative overflow-hidden transform animate-scale-in dark:bg-slate-900/95 dark:border-slate-700">
                             {/* Decorative background circle */}
                             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-primary/20 blur-2xl"></div>
                             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 rounded-full bg-secondary/20 blur-2xl"></div>
