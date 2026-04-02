@@ -26,33 +26,35 @@ export default function LessonContent({
     const { getUrl } = useLinkSettings();
     const router = useRouter();
     const [timeLeft, setTimeLeft] = useState(lesson.minDuration);
-    const [isCompleted, setIsCompleted] = useState(false);
+    const [isTimerDone, setIsTimerDone] = useState(false);
+    const [isTestingPhase, setIsTestingPhase] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [isFocused, setIsFocused] = useState(true);
     const [showFocusWarning, setShowFocusWarning] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+    const isAlreadyPassed = completedLessons.includes(lesson.id);
+
     // Initial Check & Logging
     useEffect(() => {
         logVisit(`/lessons/${lesson.id}`);
 
-        // If already completed, set state immediately
-        if (completedLessons.includes(lesson.id)) {
-            // eslint-disable-next-line
-            setIsCompleted(true);
+        // If already completed previously, set state immediately
+        if (isAlreadyPassed) {
+            setIsTimerDone(true);
             setTimeLeft(0);
         }
-    }, [lesson.id, logVisit, completedLessons]);
+    }, [lesson.id, logVisit, isAlreadyPassed]);
 
     // Timer Logic
     useEffect(() => {
-        if (isCompleted || !isFocused) return;
+        if (isAlreadyPassed || isTimerDone || !isFocused) return;
 
         timerRef.current = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
                     clearInterval(timerRef.current!);
-                    setIsCompleted(true);
+                    setIsTimerDone(true);
                     setShowConfetti(true);
                     playSuccessSound(); // Play the success ding!
                     return 0;
@@ -64,11 +66,11 @@ export default function LessonContent({
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isCompleted, isFocused, lesson.id]);
+    }, [isAlreadyPassed, isTimerDone, isFocused]);
 
     // Focus Mode Logic (Anti-Cheat)
     useEffect(() => {
-        if (isCompleted) return;
+        if (isAlreadyPassed || isTimerDone) return;
 
         const handleVisibilityChange = () => {
             if (document.hidden) {
@@ -89,11 +91,15 @@ export default function LessonContent({
             document.removeEventListener("visibilitychange", handleVisibilityChange);
             window.removeEventListener("blur", handleBlur);
         };
-    }, [isCompleted]);
+    }, [isAlreadyPassed, isTimerDone]);
 
     const handleResumeFocus = () => {
         setShowFocusWarning(false);
         setIsFocused(true);
+    };
+
+    const handleStartTest = () => {
+        setIsTestingPhase(true);
     };
 
     // Handle "ไปบทถัดไป" button click
@@ -123,7 +129,7 @@ export default function LessonContent({
             />
 
             {/* Focus Mode Warning Overlay */}
-            {showFocusWarning && !isCompleted && (
+            {showFocusWarning && !isTimerDone && !isAlreadyPassed && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in-up">
                     <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-rose-500/30 text-center relative overflow-hidden transform animate-scale-in">
                         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-rose-500/20 blur-2xl"></div>
@@ -152,7 +158,18 @@ export default function LessonContent({
             )}
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
+                {/* Exam Phase Alert Overlay (If Taking Test) */}
+                {isTestingPhase && !isAlreadyPassed && (
+                    <div className="glass-card rounded-2xl p-6 mb-8 mt-4 text-center border border-amber-300 bg-gradient-to-r from-amber-50 to-orange-50 shadow-lg animate-fade-in-down">
+                        <div className="text-4xl mb-3 animate-bounce">🤫</div>
+                        <h2 className="text-2xl font-bold text-slate-800 mb-2">เข้าสู่โหมดการทำแบบฝึกหัด</h2>
+                        <p className="text-slate-600 mb-0">เนื้อหาทั้งหมดถูกซ่อนชั่วคราว ระบบจะแสดงเนื้อหาให้สามารถทบทวนได้อีกครั้งหลังจากส่งคำตอบเรียบร้อยแล้ว</p>
+                    </div>
+                )}
+
+                {/* Hide Content condition wrapper */}
+                <div className={`${(isTestingPhase && !isAlreadyPassed) ? "hidden" : "block"} transition-all duration-500`}>
+                    {/* Header */}
                 <div className="text-center mb-8 animate-fade-in-up">
                     <span className="text-6xl sm:text-[80px] leading-tight block mb-4 sm:mb-6 animate-float-rotate">
                         {lesson.icon}
@@ -220,7 +237,7 @@ export default function LessonContent({
                         })()}
 
                         {/* Timer Overlay (if not completed) */}
-                        {!isCompleted && (
+                        {!isTimerDone && !isAlreadyPassed && (
                             <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md text-white px-4 py-2 rounded-lg font-mono text-sm flex items-center gap-2 animate-pulse">
                                 <span>⏳</span>
                                 <span>กรุณาดูวิดีโอ: {formatTime(timeLeft)}</span>
@@ -230,7 +247,7 @@ export default function LessonContent({
 
                     <div className="mt-4 flex items-center justify-between text-sm">
                         <div className="text-slate-600">
-                            {isCompleted ? (
+                            {isTimerDone || isAlreadyPassed ? (
                                 <span className="text-green-600 font-bold flex items-center gap-1">
                                     ✓ เรียนครบตามเวลาแล้ว
                                 </span>
@@ -324,28 +341,51 @@ export default function LessonContent({
                         ))}
                     </div>
                 </div>
+                {/* End of Hideable Content Wrapper */}
+                </div>
 
                 {/* Google Form Embedded + Sheet Button */}
-                <div className="glass-card rounded-2xl p-4 sm:p-8 mb-8 animate-fade-in-up overflow-hidden relative">
+                <div className="glass-card rounded-2xl p-4 sm:p-8 mb-8 animate-fade-in-up overflow-hidden relative" id="test-section">
                     <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center justify-center gap-2">
                         <span>📝</span> แบบฝึกหัดที่ {lesson.id}
                     </h2>
 
-                    {/* Lock Overlay */}
-                    {!isCompleted && (
+                    {/* Lock Overlay OR Start Test Phase */}
+                    {(!isAlreadyPassed && !isTestingPhase) && (
                         <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md z-20 flex flex-col items-center justify-center rounded-xl p-4 transition-all duration-500 group">
                             <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full border-b-8 border-amber-400 text-center transform group-hover:scale-105 transition-transform duration-300 relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-amber-400 animate-pulse"></div>
-                                <span className="text-6xl mb-4 block animate-bounce" style={{ animationDuration: '2s' }}>⏳</span>
-                                <h3 className="text-xl font-bold text-slate-800 mb-3">
-                                    ยังไม่สามารถทำแบบฝึกหัดได้
-                                </h3>
-                                <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-                                    คุณต้องศึกษาเนื้อหาและดูวิดีโอให้ครบตามเวลาที่กำหนด เพื่อปลดล็อกแบบฝึกหัดนี้
-                                </p>
-                                <div className="bg-amber-50 text-amber-700 py-3 px-6 rounded-xl font-mono text-2xl font-bold border border-amber-200 inline-block shadow-inner animate-pulse">
-                                    {formatTime(timeLeft)}
-                                </div>
+                                
+                                {!isTimerDone ? (
+                                    <>
+                                        <span className="text-6xl mb-4 block animate-bounce" style={{ animationDuration: '2s' }}>⏳</span>
+                                        <h3 className="text-xl font-bold text-slate-800 mb-3">
+                                            ยังไม่สามารถทำแบบฝึกหัดได้
+                                        </h3>
+                                        <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                                            คุณต้องศึกษาเนื้อหาและดูวิดีโอให้ครบตามเวลาที่กำหนด เพื่อปลดล็อกแบบฝึกหัดนี้
+                                        </p>
+                                        <div className="bg-amber-50 text-amber-700 py-3 px-6 rounded-xl font-mono text-2xl font-bold border border-amber-200 inline-block shadow-inner animate-pulse">
+                                            {formatTime(timeLeft)}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-6xl mb-4 block animate-bounce">🎓</span>
+                                        <h3 className="text-xl font-bold text-slate-800 mb-3">
+                                            ได้เวลาทำแบบประเมิน!
+                                        </h3>
+                                        <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                                            คุณพักเบรกดูบทเรียนได้ครบแล้ว กรุณากดปุ่มด้านล่างเพื่อเริ่มทำข้อสอบ (เนื้อหาบทเรียนด้านบนจะถูกซ่อนไว้)
+                                        </p>
+                                        <button 
+                                            onClick={handleStartTest}
+                                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-6 py-4 rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+                                        >
+                                            👉 เริ่มทำแบบฝึกหัด!
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}
@@ -365,33 +405,21 @@ export default function LessonContent({
                     </div>
 
                     <div className="mt-4 flex justify-center text-center">
-                        {isCompleted ? (
+                        {(isAlreadyPassed || isTestingPhase) ? (
                             <div className="w-full">
                                 <button
                                     onClick={handleGoToNext}
-                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-4 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg border border-teal-400"
+                                    className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-5 w-full max-w-xl rounded-2xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg shadow-lg border border-teal-400"
                                 >
                                     <span>
                                         {nextLesson
-                                            ? `✅ ส่งคำตอบแล้ว? กดไปบทที่ ${nextLesson.id}`
+                                            ? `✅ ส่งคำตอบแล้ว? กดเพื่อไปบทถัดไป (ปลดเฝ้าดู)`
                                             : "✅ ส่งคำตอบแล้ว? กดไปแบบทดสอบหลังเรียน"
                                         }
                                     </span>
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
                                 </button>
                             </div>
-                        ) : (
-                            <div className="w-full">
-                                <h2 className="text-xl font-bold text-slate-800 mb-2">
-                                    🔒 ศึกษาเนื้อหาเพื่อปลดล็อก
-                                </h2>
-                                <p className="text-slate-600 text-sm">
-                                    กรุณาศึกษาเนื้อหาให้ครบ เหลือเวลา <span className="font-bold text-red-500">{formatTime(timeLeft)}</span> นาที
-                                </p>
-                            </div>
-                        )}
+                        ) : null}
                     </div>
                 </div>
 
