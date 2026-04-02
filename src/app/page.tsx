@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { user, completedLessons } = useAuth();
+  const { user, completedLessons, hasCompletedPretest } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -143,17 +143,26 @@ export default function Home() {
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 animate-fade-in-up stagger-2">
-                <Link
-                  href="/pretest"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-white/90 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  📝 เริ่มแบบทดสอบก่อนเรียน
-                </Link>
+                {!hasCompletedPretest ? (
+                  <Link
+                    href="/pretest"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-white/90 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    📝 ทำแบบทดสอบก่อนเรียน
+                  </Link>
+                ) : (
+                  <Link
+                    href="/lessons/1"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-white/90 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    🚀 เริ่มเรียนบทที่ 1
+                  </Link>
+                )}
                 <Link
                   href="#lessons"
                   className="inline-flex items-center justify-center gap-2 bg-white/20 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/30 transform hover:scale-105 transition-all duration-300 border border-white/30 backdrop-blur-sm"
                 >
-                  📖 เข้าสู่บทเรียน
+                  📖 ดูเนื้อหาหลักสูตร
                 </Link>
               </div>
             )}

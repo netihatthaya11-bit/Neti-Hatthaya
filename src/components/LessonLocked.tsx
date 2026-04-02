@@ -9,10 +9,10 @@ interface LessonLockedProps {
 }
 
 export default function LessonLocked({ lessonId }: LessonLockedProps) {
-    const { completedLessons } = useAuth();
+    const { completedLessons, hasCompletedPretest } = useAuth();
     const router = useRouter();
 
-    const isUnlocked = lessonId === 1 || completedLessons.includes(lessonId - 1);
+    const isUnlocked = hasCompletedPretest ? (lessonId === 1 || completedLessons.includes(lessonId - 1)) : false;
 
     useEffect(() => {
         if (!isUnlocked) {

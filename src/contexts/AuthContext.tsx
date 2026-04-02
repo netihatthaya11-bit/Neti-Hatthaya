@@ -37,6 +37,8 @@ interface AuthContextType {
     sessions: SessionLog[];
     completedLessons: number[];
     markLessonComplete: (lessonId: number) => void;
+    hasCompletedPretest: boolean;
+    markPretestComplete: () => void;
     loading: boolean;
 }
 
@@ -62,6 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [sessions, setSessions] = useState<SessionLog[]>([]);
     const [visitLogs, setVisitLogs] = useState<VisitLog[]>([]);
     const [completedLessons, setCompletedLessons] = useState<number[]>([]);
+    const [hasCompletedPretest, setHasCompletedPretest] = useState(false);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
@@ -82,6 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // โหลด logs จาก localStorage
             const storedLogs = localStorage.getItem("ac_course_logs");
             const storedCompleted = localStorage.getItem(`ac_completed_${parsed.studentId}`);
+            const storedPretest = localStorage.getItem(`ac_pretest_${parsed.studentId}`);
             const storedSessions = localStorage.getItem(`ac_sessions_${parsed.studentId}`);
             
             if (storedLogs) setVisitLogs(JSON.parse(storedLogs));
@@ -94,6 +98,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     setCompletedLessons(JSON.parse(legacyCompleted));
                     localStorage.setItem(`ac_completed_${parsed.studentId}`, legacyCompleted);
                 }
+            }
+            if (storedPretest === "true") {
+                setHasCompletedPretest(true);
             }
             if (storedSessions) {
                 const parsedSessions = JSON.parse(storedSessions);
@@ -249,23 +256,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         [user]
     );
 
-    const markLessonComplete = useCallback(
-        (lessonId: number) => {
-            if (!user) return;
-            setCompletedLessons((prev) => {
-                if (!prev.includes(lessonId)) {
-                    const updatedCompleted = [...prev, lessonId];
-                    localStorage.setItem(
-                        `ac_completed_${user.studentId}`,
-                        JSON.stringify(updatedCompleted)
-                    );
-                    return updatedCompleted;
-                }
-                return prev;
-            });
-        },
-        [user]
-    );
+    const markLessonComplete = useCallback((lessonId: number) => {
+        if (!user) return;
+        setCompletedLessons((prev) => {
+            if (prev.includes(lessonId)) return prev;
+            const newCompleted = [...prev, lessonId];
+            localStorage.setItem(`ac_completed_${user.studentId}`, JSON.stringify(newCompleted));
+            return newCompleted;
+        });
+    }, [user]);
+
+    const markPretestComplete = useCallback(() => {
+        if (!user) return;
+        setHasCompletedPretest(true);
+        localStorage.setItem(`ac_pretest_${user.studentId}`, "true");
+    }, [user]);
 
     return (
         <AuthContext.Provider
@@ -279,6 +284,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 sessions,
                 completedLessons,
                 markLessonComplete,
+                hasCompletedPretest,
+                markPretestComplete,
                 loading,
             }}
         >

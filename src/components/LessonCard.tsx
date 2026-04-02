@@ -12,11 +12,11 @@ interface LessonCardProps {
 }
 
 export default function LessonCard({ lesson, index }: LessonCardProps) {
-    const { completedLessons } = useAuth();
+    const { completedLessons, hasCompletedPretest } = useAuth();
     const [shake, setShake] = useState(false);
 
-    // บทที่ 1 ปลดล็อกเสมอ, บทอื่นต้องจบบทก่อนหน้า
-    const isUnlocked = lesson.id === 1 || completedLessons.includes(lesson.id - 1);
+    // ต้องทำ Pretest ก่อน ถึงจะเริ่มบทที่ 1 ได้
+    const isUnlocked = hasCompletedPretest ? (lesson.id === 1 || completedLessons.includes(lesson.id - 1)) : false;
     const isCompleted = completedLessons.includes(lesson.id);
 
     if (!isUnlocked) {
@@ -37,7 +37,7 @@ export default function LessonCard({ lesson, index }: LessonCardProps) {
                     <div className="text-center">
                         <span className="text-4xl block mb-2">🔒</span>
                         <p className="text-slate-600 text-xs font-medium">
-                            เรียนบทที่ {lesson.id - 1} ให้จบก่อน
+                            {!hasCompletedPretest ? "กรุณาทำแบบทดสอบก่อนเรียน" : `เรียนบทที่ ${lesson.id - 1} ให้จบก่อน`}
                         </p>
                     </div>
                 </div>

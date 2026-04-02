@@ -6,10 +6,12 @@ import { courseInfo } from "@/data/lessonsData";
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLinkSettings } from "@/contexts/LinkSettingsContext";
+import { useRouter } from "next/navigation";
 
 export default function PretestPage() {
-    const { logVisit } = useAuth();
+    const { logVisit, markPretestComplete } = useAuth();
     const { getUrl } = useLinkSettings();
+    const router = useRouter();
 
     useEffect(() => {
         logVisit("/pretest");
@@ -74,9 +76,18 @@ export default function PretestPage() {
                         </iframe>
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex flex-col gap-4 items-center">
+                        <button
+                            onClick={() => {
+                                markPretestComplete();
+                                router.push("/lessons/1");
+                            }}
+                            className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-5 w-full max-w-xl rounded-2xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg shadow-lg border border-teal-400"
+                        >
+                            <span>✅ ทำทดสอบก่อนเรียนเสร็จแล้ว? คลิกเพื่อเริ่มเรียนบทที่ 1</span>
+                        </button>
                         <FormButton
-                            label="ทดสอบเสร็จแล้ว กดดูผลคะแนน"
+                            label="ดูผลคะแนนแบบทดสอบก่อนเรียน"
                             url={getUrl("pretest_sheetUrl", courseInfo.pretestSheetUrl)}
                             icon="sheet"
                             variant="secondary"
@@ -88,15 +99,9 @@ export default function PretestPage() {
                 <div className="flex justify-between items-center animate-fade-in-up stagger-3">
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-medium"
+                        className="inline-flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-medium cursor-pointer"
                     >
                         ← กลับหน้าแรก
-                    </Link>
-                    <Link
-                        href="/lessons/1"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white font-bold px-6 py-3 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all"
-                    >
-                        เข้าสู่บทเรียน →
                     </Link>
                 </div>
             </div>
