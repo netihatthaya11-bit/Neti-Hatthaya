@@ -290,5 +290,10 @@ body {
 .dark .bg-slate-50 { background-color: #1e293b !important; }
 .dark .bg-slate-100 { background-color: #334155 !important; }
 
+/* Success/Emerald overrides */
+.dark .bg-emerald-50 { background-color: rgba(16, 185, 129, 0.1) !important; }
+.dark .border-emerald-200 { border-color: rgba(16, 185, 129, 0.2) !important; }
+.dark .text-emerald-600 { color: #34d399 !important; }
+
 .dark .border-slate-100, .dark .border-slate-200 { border-color: #334155 !important; }
 
