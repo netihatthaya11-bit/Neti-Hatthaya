@@ -3,15 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FormButton from "@/components/FormButton";
+import ConfettiEffect from "@/components/ConfettiEffect";
 import { courseInfo } from "@/data/lessonsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLinkSettings } from "@/contexts/LinkSettingsContext";
+import { playSuccessSound } from "@/utils/soundEffects";
 
 export default function PosttestPage() {
     const { logVisit, completedLessons } = useAuth();
     const { getUrl } = useLinkSettings();
     const router = useRouter();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
 
     const allCompleted = [1, 2, 3, 4].every((id) => completedLessons.includes(id));
 
@@ -31,8 +36,16 @@ export default function PosttestPage() {
         return null;
     }
 
+    const handleCompletePosttest = () => {
+        setIsModalOpen(true);
+        setShowConfetti(true);
+        playSuccessSound();
+        setTimeout(() => setShowConfetti(false), 8000);
+    };
+
     return (
-        <div className="gradient-cool min-h-screen py-12">
+        <div className="gradient-cool min-h-screen py-12 relative">
+            <ConfettiEffect show={showConfetti} message="เรียนจบแล้ว! 🎉" />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-12 animate-fade-in-up">
@@ -114,15 +127,65 @@ export default function PosttestPage() {
                         </iframe>
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex flex-col items-center gap-4">
                         <FormButton
-                            label="ทดสอบเสร็จแล้ว กดดูผลคะแนน"
+                            label="ดูผลคะแนนแบบทดสอบ"
                             url={getUrl("posttest_sheetUrl", courseInfo.posttestSheetUrl)}
                             icon="sheet"
                             variant="secondary"
                         />
+                        <button
+                            onClick={handleCompletePosttest}
+                            className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold px-10 py-5 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-lg shadow-lg border border-teal-400 w-full justify-center max-w-sm"
+                        >
+                            ส่งแบบทดสอบเรียบร้อยแล้ว ✅
+                        </button>
                     </div>
                 </div>
+
+                {/* Modal Overlay */}
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in-up">
+                        <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/20 text-center relative overflow-hidden transform animate-scale-in">
+                            {/* Decorative background circle */}
+                            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-primary/20 blur-2xl"></div>
+                            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 rounded-full bg-secondary/20 blur-2xl"></div>
+
+                            <div className="relative z-10">
+                                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl mb-6 shadow-lg shadow-orange-500/30 animate-float">
+                                    🎓
+                                </div>
+                                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                                    ขอแสดงความยินดี!
+                                </h3>
+                                <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                                    คุณได้เรียนรู้เนื้อหาและทำแบบทดสอบครบถ้วนตามหลักสูตรแล้ว 
+                                    <br/><br/>
+                                    <strong>เพื่อการพัฒนาสื่อให้ดียิ่งขึ้น รบกวนช่วยประเมินความพึงพอใจสั้นๆ ให้เราหน่อยนะครับ 🙏</strong>
+                                </p>
+                                
+                                <div className="space-y-3">
+                                    <a
+                                        href="https://docs.google.com/forms/d/e/1FAIpQLSd0U6ybyFqx9TS_wrcjghwRu4jSMojMrPKCk-8aMV3SGF3Kww/viewform"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-full gap-2 bg-gradient-to-r from-primary to-secondary text-white font-bold px-6 py-4 rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-lg"
+                                        onClick={() => playSuccessSound()}
+                                    >
+                                        📝 ทำแบบประเมินความพึงพอใจ
+                                    </a>
+                                    
+                                    <Link
+                                        href="/"
+                                        className="inline-flex items-center justify-center w-full px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                    >
+                                        กลับหน้าแรก
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Navigation */}
                 <div className="flex justify-between items-center animate-fade-in-up stagger-4">
