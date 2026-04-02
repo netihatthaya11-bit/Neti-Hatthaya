@@ -146,7 +146,7 @@ export default function PosttestPage() {
                 {/* Modal Overlay */}
                 {isModalOpen && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in-up">
-                        <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/20 text-center relative overflow-hidden transform animate-scale-in dark:bg-slate-900/95 dark:border-slate-700">
+                        <div className="glass-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-white/20 text-center relative overflow-hidden transform animate-scale-in">
                             {/* Decorative background circle */}
                             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-primary/20 blur-2xl"></div>
                             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 rounded-full bg-secondary/20 blur-2xl"></div>
@@ -155,10 +155,10 @@ export default function PosttestPage() {
                                 <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl mb-6 shadow-lg shadow-orange-500/30 animate-float">
                                     🎓
                                 </div>
-                                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                                <h3 className="text-2xl font-bold text-slate-800 mb-2">
                                     ขอแสดงความยินดี!
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                                <p className="text-slate-600 mb-6 leading-relaxed">
                                     คุณได้เรียนรู้เนื้อหาและทำแบบทดสอบครบถ้วนตามหลักสูตรแล้ว 
                                     <br/><br/>
                                     <strong>เพื่อการพัฒนาสื่อให้ดียิ่งขึ้น รบกวนช่วยประเมินความพึงพอใจสั้นๆ ให้เราหน่อยนะครับ 🙏</strong>
@@ -177,7 +177,7 @@ export default function PosttestPage() {
                                     
                                     <Link
                                         href="/"
-                                        className="inline-flex items-center justify-center w-full px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                        className="inline-flex items-center justify-center w-full px-6 py-3 rounded-xl border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors"
                                     >
                                         กลับหน้าแรก
                                     </Link>
