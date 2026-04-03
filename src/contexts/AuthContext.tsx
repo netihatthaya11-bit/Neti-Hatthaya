@@ -103,8 +103,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 }
             }
 
-            // Pretest check: also auto-migrate existing users who already have progress
-            if (storedPretest === "true" || loadedCompleted.length > 0) {
+            // Pretest check: auto-migrate existing users
+            // Grant pretest if: flag exists, OR user has lesson progress, OR user has visited /pretest before
+            let loadedLogs: VisitLog[] = [];
+            if (storedLogs) {
+                loadedLogs = JSON.parse(storedLogs);
+            }
+            const hasVisitedPretest = loadedLogs.some((log: VisitLog) => log.path === "/pretest");
+
+            if (storedPretest === "true" || loadedCompleted.length > 0 || hasVisitedPretest) {
                 setHasCompletedPretest(true);
                 localStorage.setItem(`ac_pretest_${parsed.studentId}`, "true");
             }
