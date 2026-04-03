@@ -89,18 +89,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const storedSessions = localStorage.getItem(`ac_sessions_${parsed.studentId}`);
             
             if (storedLogs) setVisitLogs(JSON.parse(storedLogs));
+            let loadedCompleted: number[] = [];
             if (storedCompleted) {
-                setCompletedLessons(JSON.parse(storedCompleted));
+                loadedCompleted = JSON.parse(storedCompleted);
+                setCompletedLessons(loadedCompleted);
             } else {
                 // Fallback for legacy global completed lessons
                 const legacyCompleted = localStorage.getItem("ac_course_completed");
                 if (legacyCompleted) {
-                    setCompletedLessons(JSON.parse(legacyCompleted));
+                    loadedCompleted = JSON.parse(legacyCompleted);
+                    setCompletedLessons(loadedCompleted);
                     localStorage.setItem(`ac_completed_${parsed.studentId}`, legacyCompleted);
                 }
             }
-            if (storedPretest === "true") {
+
+            // Pretest check: also auto-migrate existing users who already have progress
+            if (storedPretest === "true" || loadedCompleted.length > 0) {
                 setHasCompletedPretest(true);
+                localStorage.setItem(`ac_pretest_${parsed.studentId}`, "true");
             }
             if (storedSessions) {
                 const parsedSessions = JSON.parse(storedSessions);
