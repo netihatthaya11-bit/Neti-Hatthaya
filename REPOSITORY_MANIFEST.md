@@ -6,7 +6,7 @@ This manifest records what is intentionally included in GitHub for moving the Ne
 
 - URL: https://github.com/netihatthaya11-bit/Neti-Hatthaya.git
 - Branch: `main`
-- Tracked file count at manifest creation: `67`
+- Tracked file count at manifest verification: `69`
 
 ## Included In Git
 
@@ -17,6 +17,7 @@ This manifest records what is intentionally included in GitHub for moving the Ne
 - `DOC.md`
 - `HANDOFF.md`
 - `README.md`
+- `REPOSITORY_MANIFEST.md`
 - `eslint.config.mjs`
 - `firebase.json`
 - `lint_errors.txt`
